@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Apollo Diagnostic Centre | Gopal Hospital And Nature Care</title>
+<meta name="description" content="Apollo Diagnostic Centre at Gopal Hospital And Nature Care, Naubatpur — advanced pathology, imaging and lab tests with accurate, fast reports.">
+<meta name="keywords" content="Apollo Diagnostic, pathology lab Naubatpur, blood test Patna, X-Ray, ECG, Gopal Hospital diagnostics">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script id="tailwind-config">
+tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-tertiary":"#ffffff","on-secondary-fixed-variant":"#00531a","surface":"#fbf9f8","primary-fixed-dim":"#acc7ff","tertiary-fixed-dim":"#c5c7c8","on-error-container":"#93000a","on-primary-fixed-variant":"#004491","on-secondary":"#ffffff","on-tertiary-fixed":"#191c1d","surface-tint":"#115cb9","tertiary-fixed":"#e1e3e4","secondary-fixed":"#83fc8e","primary":"#003f87","on-secondary-container":"#007327","on-primary":"#ffffff","secondary":"#006e25","on-tertiary-container":"#ced0d1","inverse-on-surface":"#f3f0f0","on-surface-variant":"#424752","surface-container":"#f0eded","on-tertiary-fixed-variant":"#454748","outline-variant":"#c2c6d4","on-surface":"#1b1c1c","surface-container-highest":"#e4e2e1","tertiary":"#3f4243","on-secondary-fixed":"#002106","surface-container-lowest":"#ffffff","error":"#ba1a1a","inverse-primary":"#acc7ff","primary-container":"#0056b3","on-error":"#ffffff","surface-variant":"#e4e2e1","surface-container-high":"#eae8e7","secondary-fixed-dim":"#66df75","secondary-container":"#80f98b","background":"#fbf9f8","on-primary-container":"#bbd0ff","tertiary-container":"#57595a","on-primary-fixed":"#001a40","on-background":"#1b1c1c","surface-container-low":"#f6f3f2","surface-bright":"#fbf9f8","inverse-surface":"#303030","error-container":"#ffdad6","primary-fixed":"#d7e2ff","outline":"#727784","surface-dim":"#dcd9d9","nature":"#2d7a4f","nature-light":"#e6f4ec"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"xs":"4px","gutter":"24px","sm":"12px","container-max":"1200px","base":"8px","lg":"48px","xl":"80px","md":"24px"},fontFamily:{"body-md":["Inter"],"label-sm":["Inter"],"headline-xl":["Montserrat"],"headline-md":["Montserrat"],"label-md":["Inter"],"headline-lg":["Montserrat"],"body-lg":["Inter"]},fontSize:{"body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],"label-sm":["12px",{"lineHeight":"16px","fontWeight":"600"}],"headline-xl":["48px",{"lineHeight":"56px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-md":["24px",{"lineHeight":"32px","fontWeight":"600"}],"label-md":["14px",{"lineHeight":"20px","letterSpacing":"0.01em","fontWeight":"500"}],"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"700"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}]}}}}
+</script>
+</head>
+<body class="bg-background text-on-background font-body-md">
+
+<!-- ════ HEADER / NAV ════ -->
+<header class="fixed top-0 w-full z-50 bg-surface/90 backdrop-blur-md border-b border-outline-variant/30 shadow-sm transition-shadow" id="mainHeader">
+  <div class="flex justify-between items-center h-20 px-gutter max-w-container-max mx-auto">
+    <a class="flex items-center gap-2.5" href="index.html">
+      <img alt="Gopal Hospital And Nature Care Logo" class="h-11 w-auto object-contain" src="gopal-logo.png" onerror="this.style.display='none'">
+      <div class="leading-tight">
+        <div class="font-bold text-primary text-[15px] font-headline-md leading-none">Gopal Hospital</div>
+        <div class="text-[11px] font-semibold text-secondary tracking-wide">And Nature Care</div>
+      </div>
+    </a>
+    <nav class="hidden lg:flex items-center gap-6">
+      <a class="nav-link text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="index.html">Home</a>
+      <a class="nav-link text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="about.html">About</a>
+      <a class="nav-link text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="services.html">Services</a>
+      <a class="nav-link text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="programs.html">Programs</a>
+      <a class="nav-link current text-on-surface-variant font-label-md text-label-md" href="apollo.html">Apollo Diagnostic</a>
+      <a class="nav-link text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="contact.html">Contact</a>
+    </nav>
+    <div class="flex items-center gap-3">
+      <a class="hidden lg:inline-flex items-center gap-2 bg-primary text-on-primary px-5 py-2.5 rounded-full font-label-md text-label-md font-bold hover:bg-primary-container transition-all active:scale-95" href="appointment.html">
+        <span class="material-symbols-outlined text-[18px]">calendar_add_on</span>Book Appointment
+      </a>
+      <button aria-label="Toggle menu" class="lg:hidden text-on-surface p-2" id="hamburgerBtn">
+        <span class="material-symbols-outlined" id="hamburgerIcon">menu</span>
+      </button>
+    </div>
+  </div>
+  <nav class="flex-col gap-0.5 px-gutter pb-5 pt-2 bg-surface border-t border-outline-variant/20" id="mobileMenu">
+    <a class="block py-2 font-label-md text-label-md text-on-surface-variant" href="index.html">Home</a>
+    <a class="block py-2 font-label-md text-label-md text-on-surface-variant" href="about.html">About</a>
+    <a class="block py-2 font-label-md text-label-md text-on-surface-variant" href="services.html">Services</a>
+    <a class="block py-2 font-label-md text-label-md text-on-surface-variant" href="programs.html">Programs</a>
+    <a class="block py-2 font-label-md text-label-md text-primary font-bold" href="apollo.html">Apollo Diagnostic</a>
+    <a class="block py-2 font-label-md text-label-md text-on-surface-variant" href="contact.html">Contact</a>
+    <a class="mt-3 inline-flex items-center gap-2 bg-primary text-on-primary px-6 py-2.5 rounded-full font-label-md text-label-md font-bold w-fit" href="appointment.html">
+      <span class="material-symbols-outlined text-[17px]">calendar_add_on</span>Book Appointment
+    </a>
+  </nav>
+</header>
+
+<!-- Floating Emergency -->
+<a class="fixed bottom-8 right-8 rounded-full z-50 bg-secondary text-on-secondary shadow-xl flex items-center px-5 py-3.5 gap-3 hover:brightness-110 hover:scale-105 transition-all active:scale-90" href="tel:+919334344821">
+  <span class="material-symbols-outlined icon-filled">emergency</span>
+  <div class="flex flex-col">
+    <span class="font-label-md text-label-md font-bold">Emergency: +91 93343 44821</span>
+    <span class="text-[10px] uppercase tracking-wider opacity-80">Available 24/7</span>
+  </div>
+</a>
+
+<main>
+<!-- ════ PAGE HERO ════ -->
+<section class="pt-28 pb-16 px-gutter max-w-container-max mx-auto text-center">
+  <div class="reveal active">
+    <span class="text-secondary font-bold tracking-widest uppercase text-label-sm mb-4 block">Diagnostics</span>
+    <h1 class="font-headline-xl text-headline-xl text-primary mb-4">Apollo Diagnostic Centre</h1>
+    <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">In association with Apollo Diagnostics, Gopal Hospital brings advanced pathology, imaging and lab testing to Naubatpur — accurate reports, fast turnaround, trusted technology.</p>
+  </div>
+</section>
+
+<!-- ════ HIGHLIGHTS ════ -->
+<section class="px-gutter max-w-container-max mx-auto pb-xl">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal-group">
+    <div class="bg-white p-7 rounded-2xl border border-outline-variant/30 hover:shadow-xl transition-all">
+      <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-5"><span class="material-symbols-outlined text-[32px]">science</span></div>
+      <h3 class="font-headline-md text-headline-md text-on-surface mb-2">Accurate Lab Testing</h3>
+      <p class="text-on-surface-variant font-body-md text-sm">NABL-aligned protocols and calibrated equipment for dependable results every time.</p>
+    </div>
+    <div class="bg-white p-7 rounded-2xl border border-outline-variant/30 hover:shadow-xl transition-all">
+      <div class="w-14 h-14 bg-secondary/10 rounded-xl flex items-center justify-center text-secondary mb-5"><span class="material-symbols-outlined text-[32px]">bolt</span></div>
+      <h3 class="font-headline-md text-headline-md text-on-surface mb-2">Fast Report Delivery</h3>
+      <p class="text-on-surface-variant font-body-md text-sm">Most routine reports same-day; urgent reports prioritised for emergency cases.</p>
+    </div>
+    <div class="bg-white p-7 rounded-2xl border border-outline-variant/30 hover:shadow-xl transition-all">
+      <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-5" style="background:rgba(45,122,79,.1);color:#2d7a4f"><span class="material-symbols-outlined text-[32px]">currency_rupee</span></div>
+      <h3 class="font-headline-md text-headline-md text-on-surface mb-2">Affordable Pricing</h3>
+      <p class="text-on-surface-variant font-body-md text-sm">Transparent, family-friendly rates with package discounts for full health checkups.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════ TESTS OFFERED ════ -->
+<section class="py-xl bg-surface-container-low px-gutter">
+  <div class="max-w-container-max mx-auto">
+    <div class="text-center max-w-2xl mx-auto mb-xl reveal">
+      <span class="text-secondary font-bold tracking-widest uppercase text-label-sm mb-4 block">What We Offer</span>
+      <h2 class="font-headline-lg text-headline-lg text-primary mb-4">Tests & Diagnostic Services</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 reveal-group">
+      <div class="bg-white p-6 rounded-2xl border border-outline-variant/30 flex items-center gap-4"><span class="material-symbols-outlined icon-filled text-primary text-[28px]">bloodtype</span><span class="font-label-md font-semibold text-on-surface">Complete Blood Count (CBC)</span></div>
+      <div class="bg-white p-6 rounded-2xl border border-outline-variant/30 flex items-center gap-4"><span class="material-symbols-outlined icon-filled text-primary text-[28px]">monitor_heart</span><span class="font-label-md font-semibold text-on-surface">ECG & Cardiac Profile</span></div>
+      <div class="bg-white p-6 rounded-2xl border border-outline-variant/30 flex items-center gap-4"><span class="material-symbols-outlined icon-filled text-primary text-[28px]">radiology</span><span class="font-label-md font-semibold text-on-surface">Digital X-Ray</span></div>
+      <div class="bg-white p-6 rounded-2xl border border-outline-variant/30 flex items-center gap-4"><span class="material-symbols-outlined icon-filled text-primary text-[28px]">water_drop</span><span class="font-label-md font-semibold text-on-surface">Blood Sugar (Fasting / PP)</span></div>
+      <div class="bg-white p-6 rounded-2xl border border-outline-variant/30 flex items-center gap-4"><span class="material-symbols-outlined icon-filled text-primary text-[28px]">liver</span><span class="font-label-md font-semibold text-on-surface">Liver Function Test (LFT)</span></div>
+      <div class="bg-white p-6 rounded-2xl border border-outline-variant/30 flex items-center gap-4"><span class="material-symbols-outlined icon-filled text-primary text-[28px]">kidney</span><span class="font-label-md font-semibold text-on-surface">Kidney Function Test (KFT)</span></div>
+      <div class="bg-white p-6 rounded-2xl border border-outline-variant/30 flex items-center gap-4"><span class="material-symbols-outlined icon-filled text-primary text-[28px]">thyroid</span><span class="font-label-md font-semibold text-on-surface">Thyroid Profile (T3/T4/TSH)</span></div>
+      <div class="bg-white p-6 rounded-2xl border border-outline-variant/30 flex items-center gap-4"><span class="material-symbols-outlined icon-filled text-primary text-[28px]">pregnant_woman</span><span class="font-label-md font-semibold text-on-surface">Pregnancy & Prenatal Profile</span></div>
+      <div class="bg-white p-6 rounded-2xl border border-outline-variant/30 flex items-center gap-4"><span class="material-symbols-outlined icon-filled text-primary text-[28px]">vaccines</span><span class="font-label-md font-semibold text-on-surface">Full Body Health Checkup</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ CTA ════ -->
+<section class="py-xl bg-primary text-on-primary">
+  <div class="px-gutter max-w-container-max mx-auto text-center reveal">
+    <h2 class="font-headline-lg text-headline-lg mb-4">Need a Test Done?</h2>
+    <p class="font-body-md text-on-primary-container mb-8 max-w-xl mx-auto opacity-90">Walk in or book ahead — our diagnostic team is available 24/7 for emergency samples.</p>
+    <a class="inline-flex items-center gap-2 bg-white text-primary px-8 py-4 rounded-xl font-bold hover:shadow-lg transition-all" href="appointment.html">
+      <span class="material-symbols-outlined">calendar_add_on</span>Book a Test
+    </a>
+  </div>
+</section>
+</main>
+
+<!-- ════ FOOTER ════ -->
+<footer class="bg-surface-container-highest border-t border-outline-variant">
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-xl py-xl px-gutter max-w-container-max mx-auto">
+    <div class="md:col-span-1">
+      <div class="font-bold text-primary text-lg mb-1 font-headline-md">Gopal Hospital</div>
+      <div class="font-semibold text-secondary text-sm mb-4">And Nature Care</div>
+      <p class="font-body-md text-on-surface-variant mb-6 text-sm">Trusted healthcare and natural healing in Naubatpur, Bihar.</p>
+      <div class="flex gap-3">
+        <a aria-label="Facebook" class="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all" href="#"><span class="material-symbols-outlined text-[19px]">group</span></a>
+        <a aria-label="WhatsApp" class="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all" href="https://wa.me/919334344821"><span class="material-symbols-outlined text-[19px]">chat</span></a>
+        <a aria-label="Instagram" class="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all" href="#"><span class="material-symbols-outlined text-[19px]">photo_camera</span></a>
+      </div>
+    </div>
+    <div>
+      <h4 class="font-bold font-headline-md text-on-surface mb-5">Quick Links</h4>
+      <ul class="space-y-3">
+        <li><a class="text-on-surface-variant hover:text-primary transition-all hover:translate-x-1 inline-block text-sm" href="index.html">Home</a></li>
+        <li><a class="text-on-surface-variant hover:text-primary transition-all hover:translate-x-1 inline-block text-sm" href="about.html">About Us</a></li>
+        <li><a class="text-on-surface-variant hover:text-primary transition-all hover:translate-x-1 inline-block text-sm" href="services.html">Services</a></li>
+        <li><a class="text-on-surface-variant hover:text-primary transition-all hover:translate-x-1 inline-block text-sm" href="programs.html">Programs</a></li>
+        <li><a class="text-on-surface-variant hover:text-primary transition-all hover:translate-x-1 inline-block text-sm" href="apollo.html">Apollo Diagnostic</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-bold font-headline-md text-on-surface mb-5">Nature Care</h4>
+      <ul class="space-y-3">
+        <li><a class="text-on-surface-variant hover:text-primary transition-all hover:translate-x-1 inline-block text-sm" href="services.html">Yoga Therapy</a></li>
+        <li><a class="text-on-surface-variant hover:text-primary transition-all hover:translate-x-1 inline-block text-sm" href="services.html">Panch Karma</a></li>
+        <li><a class="text-on-surface-variant hover:text-primary transition-all hover:translate-x-1 inline-block text-sm" href="services.html">Acupuncture</a></li>
+        <li><a class="text-on-surface-variant hover:text-primary transition-all hover:translate-x-1 inline-block text-sm" href="services.html">Niramay Program</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-bold font-headline-md text-on-surface mb-5">Contact Info</h4>
+      <ul class="space-y-3.5">
+        <li class="flex gap-2 text-on-surface-variant text-sm"><span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">location_on</span>Bikram More, Naubatpur, Patna, Bihar 801109</li>
+        <li class="flex gap-2 text-on-surface-variant text-sm"><span class="material-symbols-outlined text-primary text-[18px] shrink-0">call</span><a href="tel:+919334344821" class="hover:text-primary transition-colors">+91 93343 44821</a></li>
+        <li class="flex gap-2 text-on-surface-variant text-sm"><span class="material-symbols-outlined text-primary text-[18px] shrink-0">mail</span><a href="mailto:info@gopalhospital.in" class="hover:text-primary transition-colors">info@gopalhospital.in</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-outline-variant/30 py-7 px-gutter max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+    <p class="text-label-sm text-on-surface-variant">© 2025 Gopal Hospital And Nature Care, Naubatpur. All Rights Reserved.</p>
+    <div class="flex gap-6"><a class="text-label-sm text-on-surface-variant hover:text-primary" href="#">Privacy Policy</a><a class="text-label-sm text-on-surface-variant hover:text-primary" href="#">Terms of Service</a></div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"><span class="material-symbols-outlined icon-filled text-green-400">check_circle</span><span id="toastMsg">Done!</span></div>
+<script src="app.js"></script>
+</body>
+</html>
