@@ -1,10 +1,18 @@
 import express from "express";
-import { login, createAdmin } from "../controllers/authController.js";
+import {
+  login,
+  createAdmin,
+  forgotPassword,
+  verifyOtp,
+  resetPassword,
+} from "../controllers/authController.js";
 
 const router = express.Router();
 
 router.post("/login", login);
-router.post("/create-admin", createAdmin);  // ⚠️ Setup ke baad isko hata/disable karna hai
+router.post("/create-admin", createAdmin);
+router.post("/forgot-password", forgotPassword);
+router.post("/verify-otp", verifyOtp);
+router.post("/reset-password", resetPassword);
 
-const router_export = router;
-export default router_export;
+export default router;
