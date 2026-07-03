@@ -1,91 +1,112 @@
-const Program = require("../models/Program");
+import * as ProgramModel from "../models/programModel.js";
+import fs from "fs";
+import path from "path";
 
-// helper: convert DB row -> plain object with images as a real array
-function serialize(row) {
-  const plain = row.toJSON ? row.toJSON() : row;
-  let images = [];
+// GET /api/programs -> sab programs (public site + admin dono use karenge)
+export const getPrograms = async (req, res) => {
   try {
-    images = JSON.parse(plain.images || "[]");
-  } catch (e) {
-    images = [];
-  }
-  return { ...plain, images };
-}
-
-// @desc    Get all programs (optionally filter by category)
-// @route   GET /api/programs?category=ongoing
-// @access  Public
-exports.getPrograms = async (req, res) => {
-  try {
-    const where = {};
-    if (req.query.category) where.category = req.query.category;
-
-    const programs = await Program.findAll({ where, order: [["createdAt", "DESC"]] });
-    res.status(200).json({ success: true, count: programs.length, data: programs.map(serialize) });
+    const programs = await ProgramModel.getAllPrograms();
+    res.status(200).json({ success: true, data: programs });
   } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
+    console.error(err);
+    res.status(500).json({ success: false, message: "Programs fetch karne me error aaya" });
   }
 };
 
-// @desc    Get single program by id
-// @route   GET /api/programs/:id
-// @access  Public
-exports.getProgramById = async (req, res) => {
+// GET /api/programs/:id -> ek program (Read More ke liye)
+export const getProgram = async (req, res) => {
   try {
-    const program = await Program.findByPk(req.params.id);
+    const program = await ProgramModel.getProgramById(req.params.id);
     if (!program) {
-      return res.status(404).json({ success: false, message: "Program not found" });
+      return res.status(404).json({ success: false, message: "Program nahi mila" });
     }
-    res.status(200).json({ success: true, data: serialize(program) });
+    res.status(200).json({ success: true, data: program });
   } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
+    console.error(err);
+    res.status(500).json({ success: false, message: "Program fetch karne me error aaya" });
   }
 };
 
-// @desc    Create a new program
-// @route   POST /api/programs
-// @access  Admin
-exports.createProgram = async (req, res) => {
+// POST /api/programs -> naya program add (admin)
+export const addProgram = async (req, res) => {
   try {
-    const payload = { ...req.body };
-    payload.images = JSON.stringify(payload.images || []);
-    const program = await Program.create(payload);
-    res.status(201).json({ success: true, data: serialize(program) });
+    const { title, shortDescription, description } = req.body;
+
+    if (!title || !description) {
+      return res.status(400).json({ success: false, message: "Title aur Description dena zaroori hai" });
+    }
+
+    const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
+
+    const program = await ProgramModel.createProgram({
+      title,
+      shortDescription,
+      description,
+      imageUrl,
+    });
+
+    res.status(201).json({ success: true, message: "Program add ho gaya", data: program });
   } catch (err) {
-    res.status(400).json({ success: false, message: err.message });
+    console.error(err);
+    res.status(500).json({ success: false, message: "Program add karne me error aaya" });
   }
 };
 
-// @desc    Update a program
-// @route   PUT /api/programs/:id
-// @access  Admin
-exports.updateProgram = async (req, res) => {
+// PUT /api/programs/:id -> program edit/update (admin)
+export const editProgram = async (req, res) => {
   try {
-    const program = await Program.findByPk(req.params.id);
-    if (!program) {
-      return res.status(404).json({ success: false, message: "Program not found" });
+    const { id } = req.params;
+    const existing = await ProgramModel.getProgramById(id);
+
+    if (!existing) {
+      return res.status(404).json({ success: false, message: "Program nahi mila" });
     }
-    const payload = { ...req.body };
-    if (payload.images) payload.images = JSON.stringify(payload.images);
-    await program.update(payload);
-    res.status(200).json({ success: true, data: serialize(program) });
+
+    const { title, shortDescription, description } = req.body;
+    let imageUrl = existing.ImageUrl;
+
+    // Agar nayi image aayi hai to purani delete karke nayi save karo
+    if (req.file) {
+      imageUrl = `/uploads/${req.file.filename}`;
+      if (existing.ImageUrl) {
+        const oldPath = path.resolve("." + existing.ImageUrl);
+        if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+      }
+    }
+
+    const updated = await ProgramModel.updateProgram(id, {
+      title: title || existing.Title,
+      shortDescription: shortDescription !== undefined ? shortDescription : existing.ShortDescription,
+      description: description || existing.Description,
+      imageUrl,
+    });
+
+    res.status(200).json({ success: true, message: "Program update ho gaya", data: updated });
   } catch (err) {
-    res.status(400).json({ success: false, message: err.message });
+    console.error(err);
+    res.status(500).json({ success: false, message: "Program update karne me error aaya" });
   }
 };
 
-// @desc    Delete a program
-// @route   DELETE /api/programs/:id
-// @access  Admin
-exports.deleteProgram = async (req, res) => {
+// DELETE /api/programs/:id -> program delete (admin)
+export const removeProgram = async (req, res) => {
   try {
-    const program = await Program.findByPk(req.params.id);
-    if (!program) {
-      return res.status(404).json({ success: false, message: "Program not found" });
+    const { id } = req.params;
+    const existing = await ProgramModel.getProgramById(id);
+
+    if (!existing) {
+      return res.status(404).json({ success: false, message: "Program nahi mila" });
     }
-    await program.destroy();
-    res.status(200).json({ success: true, message: "Program deleted" });
+
+    if (existing.ImageUrl) {
+      const imgPath = path.resolve("." + existing.ImageUrl);
+      if (fs.existsSync(imgPath)) fs.unlinkSync(imgPath);
+    }
+
+    await ProgramModel.deleteProgram(id);
+    res.status(200).json({ success: true, message: "Program delete ho gaya" });
   } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
+    console.error(err);
+    res.status(500).json({ success: false, message: "Program delete karne me error aaya" });
   }
 };

@@ -9,6 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="program.css">
 <script id="tailwind-config">
 tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-tertiary":"#ffffff","on-secondary-fixed-variant":"#00531a","surface":"#fbf9f8","primary-fixed-dim":"#acc7ff","tertiary-fixed-dim":"#c5c7c8","on-error-container":"#93000a","on-primary-fixed-variant":"#004491","on-secondary":"#ffffff","on-tertiary-fixed":"#191c1d","surface-tint":"#115cb9","tertiary-fixed":"#e1e3e4","secondary-fixed":"#83fc8e","primary":"#003f87","on-secondary-container":"#007327","on-primary":"#ffffff","secondary":"#006e25","on-tertiary-container":"#ced0d1","inverse-on-surface":"#f3f0f0","on-surface-variant":"#424752","surface-container":"#f0eded","on-tertiary-fixed-variant":"#454748","outline-variant":"#c2c6d4","on-surface":"#1b1c1c","surface-container-highest":"#e4e2e1","tertiary":"#3f4243","on-secondary-fixed":"#002106","surface-container-lowest":"#ffffff","error":"#ba1a1a","inverse-primary":"#acc7ff","primary-container":"#0056b3","on-error":"#ffffff","surface-variant":"#e4e2e1","surface-container-high":"#eae8e7","secondary-fixed-dim":"#66df75","secondary-container":"#80f98b","background":"#fbf9f8","on-primary-container":"#bbd0ff","tertiary-container":"#57595a","on-primary-fixed":"#001a40","on-background":"#1b1c1c","surface-container-low":"#f6f3f2","surface-bright":"#fbf9f8","inverse-surface":"#303030","error-container":"#ffdad6","primary-fixed":"#d7e2ff","outline":"#727784","surface-dim":"#dcd9d9","nature":"#2d7a4f","nature-light":"#e6f4ec"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"xs":"4px","gutter":"24px","sm":"12px","container-max":"1200px","base":"8px","lg":"48px","xl":"80px","md":"24px"},fontFamily:{"body-md":["Inter"],"label-sm":["Inter"],"headline-xl":["Montserrat"],"headline-md":["Montserrat"],"label-md":["Inter"],"headline-lg":["Montserrat"],"body-lg":["Inter"]},fontSize:{"body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],"label-sm":["12px",{"lineHeight":"16px","fontWeight":"600"}],"headline-xl":["48px",{"lineHeight":"56px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-md":["24px",{"lineHeight":"32px","fontWeight":"600"}],"label-md":["14px",{"lineHeight":"20px","letterSpacing":"0.01em","fontWeight":"500"}],"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"700"}],"body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}]}}}}
 </script>
@@ -60,82 +61,32 @@ tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-tertiary":"#ffffff"
 </section>
 
 <section class="px-gutter max-w-container-max mx-auto pb-xl">
-  <!-- Tabs -->
-  <div class="flex justify-center gap-3 mb-10 reveal">
-    <button class="tab-btn active px-6 py-2.5 rounded-full font-bold text-label-md border border-primary text-primary" data-tab="ongoing">Ongoing Programs</button>
-    <button class="tab-btn px-6 py-2.5 rounded-full font-bold text-label-md border border-outline-variant text-on-surface-variant" data-tab="previous">Previous Programs</button>
+
+  <!-- Loading skeletons -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="programsSkeleton">
+    <div class="skeleton-card"></div>
+    <div class="skeleton-card"></div>
+    <div class="skeleton-card"></div>
   </div>
 
-  <!-- Ongoing -->
-  <div class="tab-content active grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="tab-ongoing">
-    <div class="prog-card bg-white rounded-2xl overflow-hidden shadow-sm border border-outline-variant/20">
-      <div class="img-wrap h-48 overflow-hidden"><img alt="Yoga Therapy Camp" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=500&q=80" onerror="this.style.display='none'"></div>
-      <div class="p-6">
-        <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold mb-3" style="background:rgba(45,122,79,.12);color:#2d7a4f">🔄 Ongoing</span>
-        <h4 class="font-headline-md text-headline-md text-on-surface mb-2">Weekly Yoga Therapy Camp</h4>
-        <p class="text-on-surface-variant text-sm mb-4">Every Sunday morning — open to all ages. Therapeutic yoga for stress, diabetes, back pain, and general wellness. Led by our certified yoga therapist.</p>
-        <a class="block text-center w-full py-2.5 bg-primary text-white rounded-xl font-bold text-label-md hover:bg-primary-container transition-colors" href="appointment.html">Read More / Register</a>
-      </div>
-    </div>
-    <div class="prog-card bg-white rounded-2xl overflow-hidden shadow-sm border border-outline-variant/20">
-      <div class="img-wrap h-48 overflow-hidden"><img alt="Niramay Health Program" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=500&q=80" onerror="this.style.display='none'"></div>
-      <div class="p-6">
-        <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold mb-3" style="background:rgba(45,122,79,.12);color:#2d7a4f">🔄 Ongoing</span>
-        <h4 class="font-headline-md text-headline-md text-on-surface mb-2">Niramay 21-Day Program</h4>
-        <p class="text-on-surface-variant text-sm mb-4">A structured 21-day detox and lifestyle reset program combining Panch Karma, diet guidance, yoga, and naturopathy for disease-free living.</p>
-        <a class="block text-center w-full py-2.5 bg-primary text-white rounded-xl font-bold text-label-md hover:bg-primary-container transition-colors" href="appointment.html">Read More / Register</a>
-      </div>
-    </div>
-    <div class="prog-card bg-white rounded-2xl overflow-hidden shadow-sm border border-outline-variant/20">
-      <div class="img-wrap h-48 overflow-hidden"><img alt="Garbh Sanskar Program" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=500&q=80" onerror="this.style.display='none'"></div>
-      <div class="p-6">
-        <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold mb-3" style="background:rgba(45,122,79,.12);color:#2d7a4f">🔄 Ongoing</span>
-        <h4 class="font-headline-md text-headline-md text-on-surface mb-2">Garbh Sanskar Karyakram</h4>
-        <p class="text-on-surface-variant text-sm mb-4">Monthly program for expecting mothers — guided meditation, prenatal yoga, music therapy, and positive affirmations for a healthy, conscious pregnancy.</p>
-        <a class="block text-center w-full py-2.5 bg-primary text-white rounded-xl font-bold text-label-md hover:bg-primary-container transition-colors" href="appointment.html">Read More / Register</a>
-      </div>
-    </div>
+  <!-- Error state -->
+  <div class="hidden text-center py-16" id="programsError">
+    <span class="material-symbols-outlined text-5xl text-error mb-3">error</span>
+    <p class="font-body-lg text-on-surface-variant mb-2">Programs load nahi ho paye.</p>
+    <p class="text-sm text-error mb-4 break-words max-w-xl mx-auto" id="programsErrorDetail"></p>
+    <button class="inline-flex items-center gap-2 bg-primary text-white px-6 py-2.5 rounded-xl font-bold text-label-md hover:bg-primary-container transition-all" id="retryBtn">
+      <span class="material-symbols-outlined text-[18px]">refresh</span>Retry
+    </button>
   </div>
 
-  <!-- Previous -->
-  <div class="tab-content grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="tab-previous">
-    <div class="prog-card bg-white rounded-2xl overflow-hidden shadow-sm border border-outline-variant/20 opacity-90">
-      <div class="img-wrap h-48 overflow-hidden relative">
-        <img alt="Free Health Camp" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=500&q=80" onerror="this.style.display='none'">
-        <div class="absolute inset-0 bg-black/30 flex items-end p-4"><span class="bg-white/90 text-on-surface text-xs font-bold px-3 py-1 rounded-full">📅 March 15, 2025</span></div>
-      </div>
-      <div class="p-6">
-        <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold mb-3 bg-surface-container text-on-surface-variant">✅ Completed</span>
-        <h4 class="font-headline-md text-headline-md text-on-surface mb-2">Free Health Camp — Naubatpur</h4>
-        <p class="text-on-surface-variant text-sm mb-4">A free community health camp providing blood pressure check-up, diabetes screening, and basic consultation to 500+ residents of Naubatpur block.</p>
-        <button class="w-full py-2.5 border border-outline-variant text-on-surface-variant rounded-xl font-bold text-label-md hover:bg-surface-container transition-colors">View Details</button>
-      </div>
-    </div>
-    <div class="prog-card bg-white rounded-2xl overflow-hidden shadow-sm border border-outline-variant/20 opacity-90">
-      <div class="img-wrap h-48 overflow-hidden relative">
-        <img alt="Panch Karma Workshop" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=500&q=80" onerror="this.style.display='none'">
-        <div class="absolute inset-0 bg-black/30 flex items-end p-4"><span class="bg-white/90 text-on-surface text-xs font-bold px-3 py-1 rounded-full">📅 January 20, 2025</span></div>
-      </div>
-      <div class="p-6">
-        <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold mb-3 bg-surface-container text-on-surface-variant">✅ Completed</span>
-        <h4 class="font-headline-md text-headline-md text-on-surface mb-2">Panch Karma Awareness Workshop</h4>
-        <p class="text-on-surface-variant text-sm mb-4">An educational workshop on the benefits and process of Panch Karma therapy — attended by 200+ participants from Bihar Sharif and Patna.</p>
-        <button class="w-full py-2.5 border border-outline-variant text-on-surface-variant rounded-xl font-bold text-label-md hover:bg-surface-container transition-colors">View Details</button>
-      </div>
-    </div>
-    <div class="prog-card bg-white rounded-2xl overflow-hidden shadow-sm border border-outline-variant/20 opacity-90">
-      <div class="img-wrap h-48 overflow-hidden relative">
-        <img alt="Yoga Day Celebration" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1588286840104-8957b019727f?w=500&q=80" onerror="this.style.display='none'">
-        <div class="absolute inset-0 bg-black/30 flex items-end p-4"><span class="bg-white/90 text-on-surface text-xs font-bold px-3 py-1 rounded-full">📅 June 21, 2024</span></div>
-      </div>
-      <div class="p-6">
-        <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold mb-3 bg-surface-container text-on-surface-variant">✅ Completed</span>
-        <h4 class="font-headline-md text-headline-md text-on-surface mb-2">International Yoga Day Celebration</h4>
-        <p class="text-on-surface-variant text-sm mb-4">Grand yoga celebration with 300+ participants — group yoga sessions, expert talks on wellness, and free health consultations on World Yoga Day 2024.</p>
-        <button class="w-full py-2.5 border border-outline-variant text-on-surface-variant rounded-xl font-bold text-label-md hover:bg-surface-container transition-colors">View Details</button>
-      </div>
-    </div>
+  <!-- Empty state -->
+  <div class="hidden text-center py-16" id="programsEmpty">
+    <span class="material-symbols-outlined text-5xl text-on-surface-variant mb-3">self_improvement</span>
+    <p class="font-body-lg text-on-surface-variant">Abhi tak koi program add nahi hua hai. Jald hi naye programs yahan dikhenge.</p>
   </div>
+
+  <!-- Dynamic cards -->
+  <div class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="programsGrid"></div>
 
   <div class="text-center mt-10 reveal">
     <a class="inline-flex items-center gap-2 bg-primary text-white px-8 py-4 rounded-xl font-bold text-label-md hover:bg-primary-container transition-all" href="appointment.html">
@@ -144,6 +95,25 @@ tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-tertiary":"#ffffff"
   </div>
 </section>
 </main>
+
+<!-- Read More Modal -->
+<div class="modal-overlay hidden" id="programModal">
+  <div class="modal-box">
+    <button aria-label="Close" class="modal-close" id="modalCloseBtn"><span class="material-symbols-outlined">close</span></button>
+    <div class="modal-img-wrap" id="modalImgWrap">
+      <img alt="" id="modalImg" src="">
+    </div>
+    <div class="p-6 md:p-8">
+      <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold mb-3" id="modalBadge">Program</span>
+      <h3 class="font-headline-lg text-headline-md md:text-headline-lg text-primary mb-3" id="modalTitle"></h3>
+      <p class="text-on-surface-variant text-sm mb-4" id="modalMeta"></p>
+      <div class="modal-description font-body-md text-body-md text-on-surface-variant" id="modalDescription"></div>
+      <a class="inline-flex items-center gap-2 mt-6 bg-primary text-white px-6 py-3 rounded-xl font-bold text-label-md hover:bg-primary-container transition-all" href="appointment.html">
+        <span class="material-symbols-outlined text-[18px]">calendar_add_on</span>Register for this Program
+      </a>
+    </div>
+  </div>
+</div>
 
 <footer class="bg-surface-container-highest border-t border-outline-variant">
   <div class="grid grid-cols-1 md:grid-cols-4 gap-xl py-xl px-gutter max-w-container-max mx-auto">
@@ -181,5 +151,6 @@ tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-tertiary":"#ffffff"
 
 <div class="toast" id="toast"><span class="material-symbols-outlined icon-filled text-green-400">check_circle</span><span id="toastMsg">Done!</span></div>
 <script src="app.js"></script>
+<script src="program.js"></script>
 </body>
 </html>
