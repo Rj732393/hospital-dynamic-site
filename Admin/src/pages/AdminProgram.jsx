@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../styles/AdminProgram.css";
+import AdminLayout from "../components/layout/AdminLayout";
 
 // Apna backend URL yahan set karein
 const BASE_URL = "http://localhost:5000";
@@ -167,10 +168,12 @@ export default function AdminProgram() {
   };
 
   return (
+
+    <AdminLayout title=""> 
     <div className="admin-wrapper">
       <div className="admin-header">
         <div>
-          <h1>Programs Admin Panel</h1>
+          <h1></h1>
           <p className="subtitle">Programs add, edit aur delete karein — jo bhi save hoga, wo neeche cards me turant dikhega</p>
         </div>
         <button
@@ -275,5 +278,6 @@ export default function AdminProgram() {
         ))}
       </div>
     </div>
+    </AdminLayout>
   );
 }

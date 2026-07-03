@@ -28,8 +28,9 @@ export default function Topbar({ title }) {
   return (
     <header className="topbar">
       <div className="topbar-left">
-        <h2 className="topbar-title">{title}</h2>
-      </div>
+  <span className="topbar-brand"><h3><b>Hospital Management System</b></h3></span>   {/* ✅ ye line add karo */}
+  <h2 className="topbar-title">{title}</h2>
+</div>
       <div className="topbar-right">
         <div className="topbar-admin-wrap" ref={dropdownRef}>
           <div

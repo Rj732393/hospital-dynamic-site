@@ -28,11 +28,12 @@ export const createService = async (data) => {
     .input("ShortDescription", sql.NVarChar(300), data.shortDescription || null)
     .input("Description", sql.NVarChar(sql.MAX), data.description)
     .input("ImageUrl", sql.NVarChar(500), data.imageUrl || null)
-    .query(`
-      INSERT INTO Services (Title, ShortDescription, Description, ImageUrl, CreatedAt, UpdatedAt)
-      OUTPUT INSERTED.*
-      VALUES (@Title, @ShortDescription, @Description, @ImageUrl, GETDATE(), GETDATE())
-    `);
+    .input("Category", sql.NVarChar(30), data.category || "other")
+    .query(
+      `INSERT INTO Services (Title, ShortDescription, Description, ImageUrl, Category, CreatedAt, UpdatedAt)
+       OUTPUT INSERTED.*
+       VALUES (@Title, @ShortDescription, @Description, @ImageUrl, @Category, GETDATE(), GETDATE())`
+    );
   return result.recordset[0];
 };
 
@@ -46,16 +47,18 @@ export const updateService = async (id, data) => {
     .input("ShortDescription", sql.NVarChar(300), data.shortDescription || null)
     .input("Description", sql.NVarChar(sql.MAX), data.description)
     .input("ImageUrl", sql.NVarChar(500), data.imageUrl || null)
-    .query(`
-      UPDATE Services
-      SET Title = @Title,
-          ShortDescription = @ShortDescription,
-          Description = @Description,
-          ImageUrl = @ImageUrl,
-          UpdatedAt = GETDATE()
-      OUTPUT INSERTED.*
-      WHERE ServiceId = @id
-    `);
+    .input("Category", sql.NVarChar(30), data.category || "other")
+    .query(
+      `UPDATE Services
+       SET Title = @Title,
+           ShortDescription = @ShortDescription,
+           Description = @Description,
+           ImageUrl = @ImageUrl,
+           Category = @Category,
+           UpdatedAt = GETDATE()
+       OUTPUT INSERTED.*
+       WHERE ServiceId = @id`
+    );
   return result.recordset[0];
 };
 

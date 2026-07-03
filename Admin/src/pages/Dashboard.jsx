@@ -33,7 +33,7 @@ export default function Dashboard() {
   const unreadCount    = messages.filter((m) => !m.isRead).length;
 
   return (
-    <AdminLayout title="Hospital Management System">
+    <AdminLayout title="">
       {loading ? (
         <div className="loader-wrap">
           <div className="loader-spinner"></div>

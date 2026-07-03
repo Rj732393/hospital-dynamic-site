@@ -2,7 +2,7 @@ import * as ServiceModel from "../models/serviceModel.js";
 import fs from "fs";
 import path from "path";
 
-// GET /api/services -> sab services (public site + admin dono use karenge)
+// GET /api/services -> sab services
 export const getServices = async (req, res) => {
   try {
     const services = await ServiceModel.getAllServices();
@@ -18,7 +18,7 @@ export const getService = async (req, res) => {
   try {
     const service = await ServiceModel.getServiceById(req.params.id);
     if (!service) {
-      return res.status(404).json({ success: false, message: "Service nahi mila" });
+      return res.status(404).json({ success: false, message: "Service nahi mili" });
     }
     res.status(200).json({ success: true, data: service });
   } catch (err) {
@@ -30,19 +30,25 @@ export const getService = async (req, res) => {
 // POST /api/services -> naya service add (admin)
 export const addService = async (req, res) => {
   try {
-    const { title, shortDescription, description } = req.body;
+    const { title, shortDescription, description, imageUrlText, category } = req.body;
 
     if (!title || !description) {
       return res.status(400).json({ success: false, message: "Title aur Description dena zaroori hai" });
     }
 
-    const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
+    let imageUrl = null;
+    if (req.file) {
+      imageUrl = `/uploads/${req.file.filename}`;
+    } else if (imageUrlText && imageUrlText.trim()) {
+      imageUrl = imageUrlText.trim();
+    }
 
     const service = await ServiceModel.createService({
       title,
       shortDescription,
       description,
       imageUrl,
+      category: category || "other",
     });
 
     res.status(201).json({ success: true, message: "Service add ho gaya", data: service });
@@ -59,16 +65,21 @@ export const editService = async (req, res) => {
     const existing = await ServiceModel.getServiceById(id);
 
     if (!existing) {
-      return res.status(404).json({ success: false, message: "Service nahi mila" });
+      return res.status(404).json({ success: false, message: "Service nahi mili" });
     }
 
-    const { title, shortDescription, description } = req.body;
+    const { title, shortDescription, description, imageUrlText, category } = req.body;
     let imageUrl = existing.ImageUrl;
 
-    // Agar nayi image aayi hai to purani delete karke nayi save karo
     if (req.file) {
       imageUrl = `/uploads/${req.file.filename}`;
-      if (existing.ImageUrl) {
+      if (existing.ImageUrl && existing.ImageUrl.startsWith("/uploads/")) {
+        const oldPath = path.resolve("." + existing.ImageUrl);
+        if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+      }
+    } else if (imageUrlText !== undefined && imageUrlText.trim()) {
+      imageUrl = imageUrlText.trim();
+      if (existing.ImageUrl && existing.ImageUrl.startsWith("/uploads/")) {
         const oldPath = path.resolve("." + existing.ImageUrl);
         if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
       }
@@ -79,6 +90,7 @@ export const editService = async (req, res) => {
       shortDescription: shortDescription !== undefined ? shortDescription : existing.ShortDescription,
       description: description || existing.Description,
       imageUrl,
+      category: category || existing.Category || "other",
     });
 
     res.status(200).json({ success: true, message: "Service update ho gaya", data: updated });
@@ -95,10 +107,10 @@ export const removeService = async (req, res) => {
     const existing = await ServiceModel.getServiceById(id);
 
     if (!existing) {
-      return res.status(404).json({ success: false, message: "Service nahi mila" });
+      return res.status(404).json({ success: false, message: "Service nahi mili" });
     }
 
-    if (existing.ImageUrl) {
+    if (existing.ImageUrl && existing.ImageUrl.startsWith("/uploads/")) {
       const imgPath = path.resolve("." + existing.ImageUrl);
       if (fs.existsSync(imgPath)) fs.unlinkSync(imgPath);
     }
