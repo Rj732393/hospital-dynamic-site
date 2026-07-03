@@ -1,0 +1,177 @@
+/* ==========================================================
+   program.css — styles specific to the dynamic Programs page
+   Works alongside the site-wide style.css / Tailwind config
+   ========================================================== */
+
+/* ---------- Program cards ---------- */
+.prog-card {
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+.prog-card:hover {
+  box-shadow: 0 10px 24px rgba(0, 0, 0, .08);
+  transform: translateY(-3px);
+}
+.prog-card .img-wrap {
+  position: relative;
+  background: #eef1f4;
+}
+.prog-card .img-wrap img {
+  transition: transform .35s ease;
+}
+.prog-card:hover .img-wrap img {
+  transform: scale(1.05);
+}
+.prog-card .img-wrap.no-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9aa3af;
+  font-size: 13px;
+  background: linear-gradient(135deg, #eef1f4, #e4e8ec);
+}
+.prog-card .card-desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.prog-card .card-footer {
+  margin-top: auto;
+}
+
+/* ---------- Skeleton loading state ---------- */
+.skeleton-card {
+  height: 340px;
+  border-radius: 1rem;
+  background: linear-gradient(90deg, #eef1f4 25%, #e4e8ec 37%, #eef1f4 63%);
+  background-size: 400% 100%;
+  animation: skeleton-shine 1.4s ease infinite;
+}
+@keyframes skeleton-shine {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+
+/* ---------- Read More modal ---------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(15, 20, 25, .55);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 24px 16px;
+  overflow-y: auto;
+  animation: fade-in .18s ease;
+}
+.modal-overlay.hidden { display: none; }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+.modal-box {
+  background: #fff;
+  border-radius: 1.25rem;
+  max-width: 640px;
+  width: 100%;
+  margin-top: 40px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .25);
+  animation: modal-pop .2s ease;
+}
+@keyframes modal-pop {
+  from { opacity: 0; transform: translateY(12px) scale(.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-img-wrap {
+  width: 100%;
+  height: 260px;
+  background: linear-gradient(135deg, #eef1f4, #e4e8ec);
+  overflow: hidden;
+}
+.modal-img-wrap.no-image { display: none; }
+.modal-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 38px;
+  height: 38px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, .9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1b1c1c;
+  z-index: 2;
+  transition: background .15s ease;
+}
+.modal-close:hover { background: #fff; }
+
+.modal-description {
+  white-space: pre-line;
+  line-height: 1.7;
+}
+
+body.modal-open { overflow: hidden; }
+
+/* ---------- Dynamic Services cards (icon + badge style, matches static cards) ---------- */
+.svc-card {
+  display: flex;
+  flex-direction: column;
+  cursor: default;
+}
+
+.svc-icon-box {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: rgba(45, 122, 79, 0.1);
+  color: #2d7a4f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin-bottom: 18px;
+}
+
+.svc-img-wrap {
+  width: 100%;
+  height: 140px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, #eef1f4, #e4e8ec);
+}
+
+.svc-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.svc-desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.svc-badge {
+  display: inline-block;
+  background: rgba(45, 122, 79, 0.12);
+  color: #2d7a4f;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  width: fit-content;
+}

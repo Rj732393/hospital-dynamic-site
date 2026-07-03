@@ -1,16 +1,53 @@
 import React, { useEffect, useState } from "react";
 import "../styles/AdminService.css";
+import AdminLayout from "../components/layout/AdminLayout";   // ✅ add karo
 
-// Apna backend URL yahan set karein
 const BASE_URL = "http://localhost:5000";
 const API_URL = `${BASE_URL}/api/services`;
 
-const initialForm = { title: "", shortDescription: "", description: "", image: null };
+const QUICK_ICONS = ["🌿", "🧘", "💆", "🏃", "👐", "🔬", "❤️", "🩺", "💊", "🏥", "🤰", "🌱"];
+
+const CATEGORIES = [
+  { value: "nature", label: "🌿 Nature Care & Holistic Services" },
+  { value: "medical", label: "🏥 Medical Services" },
+  { value: "other", label: "✨ Other / General" },
+];
+
+const initialForm = { title: "", icon: "🌿", badge: "", description: "", category: "other" };
+
+// Purani services jinme actual image file upload hui thi (path /uploads/... se shuru
+// hota hai ya http se), unhe photo maano. Chhota text (emoji) ho to icon maano.
+function isImagePath(val) {
+  if (!val) return false;
+  if (/^https?:\/\//i.test(val)) return true;
+  if (val.startsWith("/uploads/")) return true;
+  if (/\.(png|jpe?g|webp|gif|svg)$/i.test(val)) return true;
+  return false;
+}
+
+function resolveImage(imageUrl) {
+  if (!imageUrl) return null;
+  const fullUrl = /^https?:\/\//i.test(imageUrl) ? imageUrl : `${BASE_URL}${imageUrl}`;
+  return encodeURI(fullUrl);
+}
+
+async function parseResponse(res) {
+  const rawText = await res.text();
+  let data;
+  try {
+    data = JSON.parse(rawText);
+  } catch {
+    throw new Error(`Server ne JSON nahi bheja (status ${res.status}). Raw response: ${rawText.slice(0, 300)}`);
+  }
+  if (!res.ok || !data.success) {
+    throw new Error(`(${res.status}) ${data.message || "Request fail hua"}`);
+  }
+  return data;
+}
 
 export default function AdminService() {
   const [services, setServices] = useState([]);
   const [form, setForm] = useState(initialForm);
-  const [preview, setPreview] = useState(null);
   const [editId, setEditId] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -21,14 +58,25 @@ export default function AdminService() {
     fetchServices();
   }, []);
 
+  const showMessage = (msg, isError = false) => {
+    if (isError) {
+      setError(msg);
+      setTimeout(() => setError(""), 6000);
+    } else {
+      setSuccess(msg);
+      setTimeout(() => setSuccess(""), 3000);
+    }
+  };
+
   const fetchServices = async () => {
     setLoading(true);
     try {
-      const res = await fetch(API_URL);
-      const data = await res.json();
-      if (data.success) setServices(data.data);
+      const res = await fetch(encodeURI(API_URL));
+      const data = await parseResponse(res);
+      setServices(data.data);
     } catch (err) {
-      setError("Services load nahi ho paye. Server check karein.");
+      console.error("fetchServices error:", err);
+      showMessage("FETCH ERROR: " + err.message, true);
     } finally {
       setLoading(false);
     }
@@ -39,27 +87,10 @@ export default function AdminService() {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setForm((prev) => ({ ...prev, image: file }));
-    if (file) setPreview(URL.createObjectURL(file));
-  };
-
   const resetForm = () => {
     setForm(initialForm);
-    setPreview(null);
     setEditId(null);
     setShowForm(false);
-  };
-
-  const showMessage = (msg, isError = false) => {
-    if (isError) {
-      setError(msg);
-      setTimeout(() => setError(""), 4000);
-    } else {
-      setSuccess(msg);
-      setTimeout(() => setSuccess(""), 3000);
-    }
   };
 
   const handleSubmit = async (e) => {
@@ -72,24 +103,25 @@ export default function AdminService() {
     }
 
     const fd = new FormData();
-    fd.append("title", form.title);
-    fd.append("shortDescription", form.shortDescription);
-    fd.append("description", form.description);
-    if (form.image) fd.append("image", form.image);
+    fd.append("title", form.title.trim());
+    fd.append("shortDescription", form.badge.trim());
+    fd.append("description", form.description.trim());
+    fd.append("imageUrlText", form.icon.trim() || "🌿");
+    fd.append("category", form.category);
 
     setLoading(true);
     try {
       const url = editId ? `${API_URL}/${editId}` : API_URL;
       const method = editId ? "PUT" : "POST";
-      const res = await fetch(url, { method, body: fd });
-      const data = await res.json();
-      if (!data.success) throw new Error(data.message);
+      const res = await fetch(encodeURI(url), { method, body: fd });
+      const data = await parseResponse(res);
 
-      showMessage(data.message);
+      showMessage(data.message || (editId ? "Service update ho gaya" : "Service add ho gaya"));
       await fetchServices();
       resetForm();
     } catch (err) {
-      showMessage(err.message || "Kuch galat ho gaya", true);
+      console.error("handleSubmit error:", err);
+      showMessage("SAVE ERROR: " + err.message, true);
     } finally {
       setLoading(false);
     }
@@ -98,12 +130,12 @@ export default function AdminService() {
   const handleEdit = (service) => {
     setEditId(service.ServiceId);
     setForm({
-      title: service.Title,
-      shortDescription: service.ShortDescription || "",
+      title: service.Title || "",
+      icon: !isImagePath(service.ImageUrl) && service.ImageUrl ? service.ImageUrl : "🌿",
+      badge: service.ShortDescription || "",
       description: service.Description || "",
-      image: null,
+      category: service.Category || "other",
     });
-    setPreview(service.ImageUrl ? `${BASE_URL}${service.ImageUrl}` : null);
     setShowForm(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -112,24 +144,27 @@ export default function AdminService() {
     if (!window.confirm("Kya aap sach me is service ko delete karna chahte hain?")) return;
     setLoading(true);
     try {
-      const res = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
-      const data = await res.json();
-      if (!data.success) throw new Error(data.message);
-      showMessage(data.message);
+      const res = await fetch(encodeURI(`${API_URL}/${id}`), { method: "DELETE" });
+      const data = await parseResponse(res);
+      showMessage(data.message || "Service delete ho gaya");
       await fetchServices();
     } catch (err) {
-      showMessage(err.message, true);
+      console.error("handleDelete error:", err);
+      showMessage("DELETE ERROR: " + err.message, true);
     } finally {
       setLoading(false);
     }
   };
 
+  const categoryLabel = (val) => CATEGORIES.find((c) => c.value === val)?.label || "✨ Other";
+
   return (
+    <AdminLayout title="">
     <div className="admin-wrapper">
       <div className="admin-header">
         <div>
           <h1>Services Admin Panel</h1>
-          <p className="subtitle">Services add, edit aur delete karein</p>
+          <p className="subtitle">Category chuno — usi section me card user side (services.html) par dikhega</p>
         </div>
         <button
           className="btn-primary"
@@ -150,42 +185,84 @@ export default function AdminService() {
           <h2>{editId ? "Service Edit Karein" : "Naya Service Add Karein"}</h2>
 
           <div className="form-group">
-            <label>Title *</label>
+            <label>Section (Category) *</label>
+            <select name="category" value={form.category} onChange={handleChange} className="category-select">
+              {CATEGORIES.map((c) => (
+                <option key={c.value} value={c.value}>
+                  {c.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="form-row">
+            <div className="form-group icon-group">
+              <label>Icon</label>
+              <input
+                type="text"
+                name="icon"
+                value={form.icon}
+                onChange={handleChange}
+                maxLength={4}
+                className="icon-input"
+                placeholder="🌿"
+              />
+              <div className="icon-picker">
+                {QUICK_ICONS.map((ic) => (
+                  <button
+                    type="button"
+                    key={ic}
+                    className={`icon-chip ${form.icon === ic ? "active" : ""}`}
+                    onClick={() => setForm((prev) => ({ ...prev, icon: ic }))}
+                  >
+                    {ic}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="form-group flex-1">
+              <label>Title *</label>
+              <input
+                type="text"
+                name="title"
+                value={form.title}
+                onChange={handleChange}
+                placeholder="Service ka naam, jaise Yoga Therapy"
+              />
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label>Badge / Tag</label>
             <input
               type="text"
-              name="title"
-              value={form.title}
+              name="badge"
+              value={form.badge}
               onChange={handleChange}
-              placeholder="Service ka title"
+              placeholder="Card par chhota tag, jaise 🧘 Wellness"
             />
           </div>
 
           <div className="form-group">
-            <label>Short Description</label>
-            <input
-              type="text"
-              name="shortDescription"
-              value={form.shortDescription}
-              onChange={handleChange}
-              placeholder="Card par dikhne wala chhota description"
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Full Description *</label>
+            <label>Description *</label>
             <textarea
               name="description"
-              rows="6"
+              rows="4"
               value={form.description}
               onChange={handleChange}
-              placeholder="Poora detail - 'Read More' click karne par yahi dikhega"
+              placeholder="Service ka poora detail"
             />
           </div>
 
           <div className="form-group">
-            <label>Image</label>
-            <input type="file" accept="image/*" onChange={handleImageChange} />
-            {preview && <img src={preview} alt="preview" className="img-preview" />}
+            <label>Live Preview</label>
+            <div className="preview-card">
+              <div className="preview-icon-box">{form.icon || "🌿"}</div>
+              <h3>{form.title || "Service Title"}</h3>
+              <p>{form.description || "Service description yahan dikhega..."}</p>
+              {form.badge && <span className="preview-badge">{form.badge}</span>}
+            </div>
           </div>
 
           <div className="form-actions">
@@ -202,31 +279,42 @@ export default function AdminService() {
       <div className="service-grid">
         {loading && services.length === 0 && <p className="empty-msg">Loading...</p>}
         {!loading && services.length === 0 && (
-          <p className="empty-msg">Abhi tak koi service add nahi hua hai.</p>
+          <p className="empty-msg">Abhi tak koi service add nahi hui hai.</p>
         )}
 
-        {services.map((p) => (
-          <div className="service-card" key={p.ServiceId}>
-            {p.ImageUrl ? (
-              <img src={`${BASE_URL}${p.ImageUrl}`} alt={p.Title} />
-            ) : (
-              <div className="no-image">No Image</div>
-            )}
-            <div className="service-card-body">
-              <h3>{p.Title}</h3>
-              <p>{p.ShortDescription}</p>
+        {services.map((s) => {
+          const imgPath = isImagePath(s.ImageUrl);
+          return (
+            <div className="service-card" key={s.ServiceId}>
+              {imgPath ? (
+                <img
+                  className="service-photo"
+                  src={resolveImage(s.ImageUrl)}
+                  alt={s.Title}
+                  onError={(e) => {
+                    e.target.style.display = "none";
+                  }}
+                />
+              ) : (
+                <div className="service-icon-box">{s.ImageUrl || "🌿"}</div>
+              )}
+              <span className="category-tag">{categoryLabel(s.Category)}</span>
+              <h3>{s.Title}</h3>
+              <p>{s.Description}</p>
+              {s.ShortDescription && <span className="service-badge">{s.ShortDescription}</span>}
               <div className="card-actions">
-                <button className="btn-edit" onClick={() => handleEdit(p)}>
+                <button className="btn-edit" onClick={() => handleEdit(s)}>
                   Edit
                 </button>
-                <button className="btn-delete" onClick={() => handleDelete(p.ServiceId)}>
+                <button className="btn-delete" onClick={() => handleDelete(s.ServiceId)}>
                   Delete
                 </button>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
+    </AdminLayout>
   );
 }

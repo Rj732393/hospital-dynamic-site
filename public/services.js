@@ -1,33 +1,34 @@
 /* ==========================================================
-   program.js — fetches Programs from the backend API and
-   renders them as cards on programs.html (Read More = modal)
+   services.js — fetches Services from the backend API and
+   renders them as cards on services.html (Read More = modal)
    ========================================================== */
 (function () {
   // Backend URL — change this to your deployed API URL in production
   const BASE_URL = "http://localhost:5000";
-  const API_URL = `${BASE_URL}/api/programs`;
+  const API_URL = `${BASE_URL}/api/services`;
 
-  const skeletonEl = document.getElementById("programsSkeleton");
-  const errorEl = document.getElementById("programsError");
-  const errorDetailEl = document.getElementById("programsErrorDetail");
-  const emptyEl = document.getElementById("programsEmpty");
-  const gridEl = document.getElementById("programsGrid");
-  const retryBtn = document.getElementById("retryBtn");
+  const skeletonEl = document.getElementById("servicesSkeleton");
+  const errorEl = document.getElementById("servicesError");
+  const errorDetailEl = document.getElementById("servicesErrorDetail");
+  const emptyEl = document.getElementById("servicesEmpty");
+  const gridEl = document.getElementById("servicesGrid");
+  const retryBtn = document.getElementById("servicesRetryBtn");
 
-  const modal = document.getElementById("programModal");
-  const modalCloseBtn = document.getElementById("modalCloseBtn");
-  const modalImgWrap = document.getElementById("modalImgWrap");
-  const modalImg = document.getElementById("modalImg");
-  const modalTitle = document.getElementById("modalTitle");
-  const modalMeta = document.getElementById("modalMeta");
-  const modalBadge = document.getElementById("modalBadge");
-  const modalDescription = document.getElementById("modalDescription");
+  const modal = document.getElementById("serviceModal");
+  const modalCloseBtn = document.getElementById("serviceModalCloseBtn");
+  const modalImgWrap = document.getElementById("serviceModalImgWrap");
+  const modalImg = document.getElementById("serviceModalImg");
+  const modalTitle = document.getElementById("serviceModalTitle");
+  const modalMeta = document.getElementById("serviceModalMeta");
+  const modalBadge = document.getElementById("serviceModalBadge");
+  const modalDescription = document.getElementById("serviceModalDescription");
 
   // ------------------------------------------------------------------
-  // Backend field naam kabhi PascalCase (Title, Description) hota hai,
-  // kabhi camelCase (title, description), kabhi kuch aur (ProgramName,
-  // Details). Ye helper har possible naam try karta hai taaki Title
-  // khaali na dikhe aur description sahi field se aaye.
+  // Backend kabhi PascalCase bhejta hai (Title, Description) aur kabhi
+  // camelCase (title, description) — ya alag naam bhi ho sakta hai
+  // (LongDescription, Details, Content, wagera). Ye helper har possible
+  // naam try karta hai taaki "description Read More me nahi dikh raha"
+  // jaisi field-mismatch problem kabhi na ho.
   // ------------------------------------------------------------------
   function pick(obj, keys) {
     for (const k of keys) {
@@ -38,17 +39,17 @@
     return "";
   }
 
-  function getId(p) {
-    return pick(p, ["ProgramId", "programId", "Id", "id", "_id"]);
+  function getId(s) {
+    return pick(s, ["ServiceId", "serviceId", "Id", "id", "_id"]);
   }
-  function getTitle(p) {
-    return pick(p, ["Title", "title", "Name", "name", "ProgramName", "programName", "ProgramTitle", "programTitle"]);
+  function getTitle(s) {
+    return pick(s, ["Title", "title", "Name", "name"]);
   }
-  function getShortDesc(p) {
-    return pick(p, ["ShortDescription", "shortDescription", "Summary", "summary", "Subtitle", "subtitle"]);
+  function getShortDesc(s) {
+    return pick(s, ["ShortDescription", "shortDescription", "Summary", "summary", "Subtitle", "subtitle"]);
   }
-  function getDescription(p) {
-    return pick(p, [
+  function getDescription(s) {
+    return pick(s, [
       "Description",
       "description",
       "LongDescription",
@@ -63,14 +64,14 @@
       "body",
     ]);
   }
-  function getImage(p) {
-    return pick(p, ["ImageUrl", "imageUrl", "Image", "image", "Icon", "icon", "Photo", "photo"]);
+  function getImage(s) {
+    return pick(s, ["ImageUrl", "imageUrl", "Image", "image", "Icon", "icon", "Photo", "photo"]);
   }
-  function getCreatedAt(p) {
-    return pick(p, ["CreatedAt", "createdAt", "created_at"]);
+  function getCreatedAt(s) {
+    return pick(s, ["CreatedAt", "createdAt", "created_at"]);
   }
-  function getUpdatedAt(p) {
-    return pick(p, ["UpdatedAt", "updatedAt", "updated_at"]);
+  function getUpdatedAt(s) {
+    return pick(s, ["UpdatedAt", "updatedAt", "updated_at"]);
   }
 
   function showState(state) {
@@ -80,6 +81,8 @@
     gridEl.classList.add("hidden");
     if (state === "loading") skeletonEl.classList.remove("hidden");
     if (state === "error") errorEl.classList.remove("hidden");
+    if (state === "empty") emptyEl.classList.remove("hidden");
+    if (state === "grid") gridEl.classList.remove("hidden");
   }
 
   function resolveImage(imageUrl) {
@@ -88,6 +91,8 @@
     return encodeURI(fullUrl);
   }
 
+  // Agar ImageUrl http(s) URL hai ya /uploads/... path hai ya file
+  // extension wala hai to photo maano; chhota emoji/icon text ho to icon.
   function isImagePath(val) {
     if (!val) return false;
     if (/^https?:\/\//i.test(val)) return true;
@@ -97,7 +102,7 @@
   }
 
   function resolveIcon(imageUrl) {
-    if (!imageUrl) return "🧘";
+    if (!imageUrl) return "🩺";
     if (isImagePath(imageUrl)) return null; // ye photo hai, icon nahi
     return imageUrl;
   }
@@ -118,23 +123,19 @@
       .replace(/"/g, "&quot;");
   }
 
-  function shortText(program) {
-    const short = getShortDesc(program);
+  function shortText(service) {
+    const short = getShortDesc(service);
     if (short) return short;
-    const desc = getDescription(program);
+    const desc = getDescription(service);
     return desc.slice(0, 130) + (desc.length > 130 ? "…" : "");
   }
 
-  function buildCard(program) {
-    const imageUrl = getImage(program);
+  function buildCard(service) {
+    const imageUrl = getImage(service);
     const icon = resolveIcon(imageUrl);
     const img = icon ? null : resolveImage(imageUrl);
-    const title = getTitle(program);
-    const shortDesc = getShortDesc(program);
-    const paraText = shortText(program);
-    // Agar badge wala text aur paragraph wala text ek hi hai (jaise test
-    // data me hota hai), to badge dobara mat dikhao — sirf ek baar dikhega.
-    const showBadge = shortDesc && shortDesc !== paraText;
+    const title = getTitle(service);
+    const shortDesc = getShortDesc(service);
 
     const card = document.createElement("div");
     card.className = "svc-card bg-white p-7 rounded-2xl border border-outline-variant/30 hover:shadow-xl transition-all";
@@ -143,33 +144,32 @@
       ${img
         ? `<div class="svc-img-wrap"><img alt="${escapeHtml(title)}" src="${img}" onerror="this.parentElement.style.display='none';"></div>`
         : `<div class="svc-icon-box">${escapeHtml(icon)}</div>`}
-      <h3 class="font-headline-md text-headline-md text-on-surface mb-2">${escapeHtml(title || "Untitled Program")}</h3>
-      <p class="text-on-surface-variant font-body-md mb-4 text-sm svc-desc">${escapeHtml(paraText)}</p>
-      ${showBadge ? `<span class="svc-badge">${escapeHtml(shortDesc)}</span>` : ""}
+      <h3 class="font-headline-md text-headline-md text-on-surface mb-2">${escapeHtml(title)}</h3>
+      <p class="text-on-surface-variant font-body-md mb-4 text-sm svc-desc">${escapeHtml(shortText(service))}</p>
+      ${shortDesc ? `<span class="svc-badge">${escapeHtml(shortDesc)}</span>` : ""}
       <div class="mt-4">
-        <button type="button" class="read-more-btn text-primary font-bold text-label-md flex items-center gap-1" data-id="${escapeHtml(getId(program))}">Read More <span class="material-symbols-outlined text-[18px]">chevron_right</span></button>
+        <button type="button" class="read-more-btn text-primary font-bold text-label-md flex items-center gap-1" data-id="${escapeHtml(getId(service))}">Read More <span class="material-symbols-outlined text-[18px]">chevron_right</span></button>
       </div>
     `;
 
-    card.querySelector(".read-more-btn").addEventListener("click", () => openModal(program));
+    card.querySelector(".read-more-btn").addEventListener("click", () => openModal(service));
     return card;
   }
 
-  function renderPrograms(programs) {
+  function renderServices(services) {
     gridEl.innerHTML = "";
-    if (!programs || programs.length === 0) {
-      gridEl.classList.add("hidden");
-      emptyEl.classList.remove("hidden");
+    if (!services || services.length === 0) {
+      showState("empty");
       return;
     }
+    gridEl.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5";
     const fragment = document.createDocumentFragment();
-    programs.forEach((p) => fragment.appendChild(buildCard(p)));
+    services.forEach((s) => fragment.appendChild(buildCard(s)));
     gridEl.appendChild(fragment);
-    gridEl.classList.remove("hidden");
-    emptyEl.classList.add("hidden");
+    showState("grid");
   }
 
-  async function loadPrograms() {
+  async function loadServices() {
     showState("loading");
     try {
       const res = await fetch(encodeURI(API_URL));
@@ -181,45 +181,46 @@
         throw new Error(`Server ne JSON nahi bheja (status ${res.status}). Raw: ${rawText.slice(0, 300)}`);
       }
       if (!res.ok || !data.success) {
-        throw new Error(`(${res.status}) ${data.message || "Programs fetch nahi ho paye"}`);
+        throw new Error(`(${res.status}) ${data.message || "Services fetch nahi ho paye"}`);
       }
-      console.log("Fetched programs:", data.data);
-      showState("idle");
-      renderPrograms(data.data || []);
+      console.log("Fetched services:", data.data);
+      renderServices(data.data);
     } catch (err) {
-      console.error("Programs load error:", err);
+      console.error("Services load error:", err);
       if (errorDetailEl) errorDetailEl.textContent = err.message;
       showState("error");
     }
   }
 
-  function openModal(program) {
-    const imageUrl = getImage(program);
+  function openModal(service) {
+    const imageUrl = getImage(service);
     const icon = resolveIcon(imageUrl);
     const img = icon ? null : resolveImage(imageUrl);
     if (img) {
       modalImgWrap.classList.remove("no-image");
-      modalImgWrap.querySelector("#modalIcon")?.remove();
+      modalImgWrap.querySelector("#serviceModalIcon")?.remove();
       modalImg.style.display = "";
       modalImg.src = img;
-      modalImg.alt = getTitle(program);
+      modalImg.alt = getTitle(service);
     } else {
       modalImgWrap.classList.add("no-image");
       modalImg.style.display = "none";
       modalImg.src = "";
     }
-    modalTitle.textContent = getTitle(program) || "Untitled Program";
+    modalTitle.textContent = getTitle(service);
     modalBadge.style.background = "rgba(0,63,135,.1)";
     modalBadge.style.color = "#003f87";
-    modalBadge.textContent = getShortDesc(program) || "Program";
-    const dateLabel = formatDate(getUpdatedAt(program) || getCreatedAt(program));
+    modalBadge.textContent = getShortDesc(service) || "Service";
+    const dateLabel = formatDate(getUpdatedAt(service) || getCreatedAt(service));
     modalMeta.textContent = dateLabel ? `Last updated: ${dateLabel}` : "";
 
-    const desc = getDescription(program);
+    const desc = getDescription(service);
     modalDescription.textContent = desc || "Detail jald hi update kiya jayega.";
 
-    if (!getTitle(program) || !desc) {
-      console.warn("Program me Title ya Description field nahi mila. Poora object:", program);
+    // Debug helper: agar description khaali hai to console me poora
+    // object dikhado, taaki backend ka asli field naam pata chal sake.
+    if (!desc) {
+      console.warn("Service me Description field nahi mila. Poora object:", service);
     }
 
     modal.classList.remove("hidden");
@@ -240,7 +241,7 @@
     if (e.key === "Escape" && !modal.classList.contains("hidden")) closeModal();
   });
 
-  retryBtn.addEventListener("click", loadPrograms);
+  retryBtn.addEventListener("click", loadServices);
 
-  document.addEventListener("DOMContentLoaded", loadPrograms);
+  document.addEventListener("DOMContentLoaded", loadServices);
 })();
