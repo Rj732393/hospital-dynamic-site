@@ -1,12 +1,18 @@
 /* ==========================================================
    services.js — fetches Services from the backend API and
-   renders them as cards on services.html (Read More = modal)
+   renders them into THREE grids based on `category`:
+     - nature   -> #natureCareDynamicGrid   (green theme)
+     - medical  -> #medicalDynamicGrid      (blue theme)
+     - anything else -> #servicesGrid       ("Other Services", photo/emoji style)
+   Card design matches the original static cards. Read More
+   opens the same modal (with theme colors applied).
    ========================================================== */
 (function () {
   // Backend URL — change this to your deployed API URL in production
   const BASE_URL = "http://localhost:5000";
   const API_URL = `${BASE_URL}/api/services`;
 
+  // ---- "Other Services" section elements (unchanged behaviour) ----
   const skeletonEl = document.getElementById("servicesSkeleton");
   const errorEl = document.getElementById("servicesError");
   const errorDetailEl = document.getElementById("servicesErrorDetail");
@@ -14,6 +20,13 @@
   const gridEl = document.getElementById("servicesGrid");
   const retryBtn = document.getElementById("servicesRetryBtn");
 
+  // ---- Nature Care & Medical dynamic grids ----
+  const natureGridEl = document.getElementById("natureCareDynamicGrid");
+  const natureEmptyEl = document.getElementById("natureCareEmpty");
+  const medicalGridEl = document.getElementById("medicalDynamicGrid");
+  const medicalEmptyEl = document.getElementById("medicalEmpty");
+
+  // ---- Modal ----
   const modal = document.getElementById("serviceModal");
   const modalCloseBtn = document.getElementById("serviceModalCloseBtn");
   const modalImgWrap = document.getElementById("serviceModalImgWrap");
@@ -23,12 +36,16 @@
   const modalBadge = document.getElementById("serviceModalBadge");
   const modalDescription = document.getElementById("serviceModalDescription");
 
+  // Theme colors per category — same colors used by the old static cards
+  const THEMES = {
+    nature: { iconBg: "rgba(45,122,79,.1)", color: "#2d7a4f", badgeBg: "rgba(45,122,79,.12)" },
+    medical: { iconBg: "rgba(0,63,135,.1)", color: "#003f87", badgeBg: "rgba(0,63,135,.12)" },
+  };
+
   // ------------------------------------------------------------------
   // Backend kabhi PascalCase bhejta hai (Title, Description) aur kabhi
-  // camelCase (title, description) — ya alag naam bhi ho sakta hai
-  // (LongDescription, Details, Content, wagera). Ye helper har possible
-  // naam try karta hai taaki "description Read More me nahi dikh raha"
-  // jaisi field-mismatch problem kabhi na ho.
+  // camelCase (title, description) — ye helper har possible naam try
+  // karta hai taaki field-mismatch se koi problem na ho.
   // ------------------------------------------------------------------
   function pick(obj, keys) {
     for (const k of keys) {
@@ -50,22 +67,16 @@
   }
   function getDescription(s) {
     return pick(s, [
-      "Description",
-      "description",
-      "LongDescription",
-      "longDescription",
-      "FullDescription",
-      "fullDescription",
-      "Details",
-      "details",
-      "Content",
-      "content",
-      "Body",
-      "body",
+      "Description", "description", "LongDescription", "longDescription",
+      "FullDescription", "fullDescription", "Details", "details", "Content", "content", "Body", "body",
     ]);
   }
   function getImage(s) {
     return pick(s, ["ImageUrl", "imageUrl", "Image", "image", "Icon", "icon", "Photo", "photo"]);
+  }
+  function getCategory(s) {
+    const c = pick(s, ["Category", "category"]);
+    return (c || "other").toString().trim().toLowerCase();
   }
   function getCreatedAt(s) {
     return pick(s, ["CreatedAt", "createdAt", "created_at"]);
@@ -130,6 +141,41 @@
     return desc.slice(0, 130) + (desc.length > 130 ? "…" : "");
   }
 
+  // ----------------------------------------------------------------
+  // Themed card — same markup/classes as the old static Nature Care /
+  // Medical Services cards, just built dynamically. Icon is whatever
+  // emoji/icon admin picked (imageUrlText), colored per theme.
+  // ----------------------------------------------------------------
+  function buildThemedCard(service, theme) {
+    const title = getTitle(service);
+    const shortDesc = getShortDesc(service);
+    const rawIcon = getImage(service);
+    const icon = resolveIcon(rawIcon) || "🩺";
+
+    const card = document.createElement("div");
+    card.className =
+      "bg-white p-7 rounded-2xl border border-outline-variant/30 hover:shadow-xl transition-all group cursor-default";
+
+    card.innerHTML = `
+      <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-5 text-[28px] group-hover:scale-110 transition-transform"
+           style="background:${theme.iconBg};color:${theme.color}">${escapeHtml(icon)}</div>
+      <h3 class="font-headline-md text-headline-md text-on-surface mb-2">${escapeHtml(title)}</h3>
+      <p class="text-on-surface-variant font-body-md mb-5 text-sm">${escapeHtml(shortText(service))}</p>
+      <div class="flex items-center justify-between gap-3 flex-wrap">
+        ${shortDesc
+          ? `<span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold" style="background:${theme.badgeBg};color:${theme.color}">${escapeHtml(shortDesc)}</span>`
+          : "<span></span>"}
+        <button type="button" class="read-more-btn font-bold text-label-md flex items-center gap-1" style="color:${theme.color}" data-id="${escapeHtml(getId(service))}">
+          Read More <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+        </button>
+      </div>
+    `;
+
+    card.querySelector(".read-more-btn").addEventListener("click", () => openModal(service, theme));
+    return card;
+  }
+
+  // "Other Services" card (photo/emoji style, unchanged from before)
   function buildCard(service) {
     const imageUrl = getImage(service);
     const icon = resolveIcon(imageUrl);
@@ -152,21 +198,59 @@
       </div>
     `;
 
-    card.querySelector(".read-more-btn").addEventListener("click", () => openModal(service));
+    card.querySelector(".read-more-btn").addEventListener("click", () => openModal(service, null));
     return card;
   }
 
+  // ----------------------------------------------------------------
+  // Split services by category and render each group into its own
+  // grid — this is the core of "dynamically card add ho, UI same rahe"
+  // ----------------------------------------------------------------
   function renderServices(services) {
-    gridEl.innerHTML = "";
-    if (!services || services.length === 0) {
-      showState("empty");
-      return;
+    const natureList = [];
+    const medicalList = [];
+    const otherList = [];
+
+    (services || []).forEach((s) => {
+      const cat = getCategory(s);
+      if (cat === "nature") natureList.push(s);
+      else if (cat === "medical") medicalList.push(s);
+      else otherList.push(s);
+    });
+
+    // ---- Nature Care grid ----
+    natureGridEl.innerHTML = "";
+    if (natureList.length === 0) {
+      natureEmptyEl.classList.remove("hidden");
+    } else {
+      natureEmptyEl.classList.add("hidden");
+      const frag = document.createDocumentFragment();
+      natureList.forEach((s) => frag.appendChild(buildThemedCard(s, THEMES.nature)));
+      natureGridEl.appendChild(frag);
     }
-    gridEl.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5";
-    const fragment = document.createDocumentFragment();
-    services.forEach((s) => fragment.appendChild(buildCard(s)));
-    gridEl.appendChild(fragment);
-    showState("grid");
+
+    // ---- Medical Services grid ----
+    medicalGridEl.innerHTML = "";
+    if (medicalList.length === 0) {
+      medicalEmptyEl.classList.remove("hidden");
+    } else {
+      medicalEmptyEl.classList.add("hidden");
+      const frag = document.createDocumentFragment();
+      medicalList.forEach((s) => frag.appendChild(buildThemedCard(s, THEMES.medical)));
+      medicalGridEl.appendChild(frag);
+    }
+
+    // ---- Other Services grid (skeleton/error/empty/grid states) ----
+    gridEl.innerHTML = "";
+    if (otherList.length === 0) {
+      showState("empty");
+    } else {
+      gridEl.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6";
+      const frag = document.createDocumentFragment();
+      otherList.forEach((s) => frag.appendChild(buildCard(s)));
+      gridEl.appendChild(frag);
+      showState("grid");
+    }
   }
 
   async function loadServices() {
@@ -192,7 +276,7 @@
     }
   }
 
-  function openModal(service) {
+  function openModal(service, theme) {
     const imageUrl = getImage(service);
     const icon = resolveIcon(imageUrl);
     const img = icon ? null : resolveImage(imageUrl);
@@ -208,17 +292,19 @@
       modalImg.src = "";
     }
     modalTitle.textContent = getTitle(service);
-    modalBadge.style.background = "rgba(0,63,135,.1)";
-    modalBadge.style.color = "#003f87";
+
+    const badgeBg = theme ? theme.badgeBg : "rgba(0,63,135,.1)";
+    const badgeColor = theme ? theme.color : "#003f87";
+    modalBadge.style.background = badgeBg;
+    modalBadge.style.color = badgeColor;
     modalBadge.textContent = getShortDesc(service) || "Service";
+
     const dateLabel = formatDate(getUpdatedAt(service) || getCreatedAt(service));
     modalMeta.textContent = dateLabel ? `Last updated: ${dateLabel}` : "";
 
     const desc = getDescription(service);
     modalDescription.textContent = desc || "Detail jald hi update kiya jayega.";
 
-    // Debug helper: agar description khaali hai to console me poora
-    // object dikhado, taaki backend ka asli field naam pata chal sake.
     if (!desc) {
       console.warn("Service me Description field nahi mila. Poora object:", service);
     }

@@ -25,10 +25,6 @@ tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-tertiary":"#ffffff"
 
       <img src="../images/gopal-logo.png" alt="Gopal Hospital And Nature Care Logo" class="h-11 w-auto object-contain" src="gopal-logo.png" onerror="this.style.display='none'">
 
-      <div class="leading-tight">
-        <div class="font-bold text-primary text-[15px] font-headline-md leading-none">Gopal Hospital</div>
-        <div class="text-[11px] font-semibold text-secondary tracking-wide">And Nature Care</div>
-      </div>
     </a>
     <nav class="hidden lg:flex items-center gap-6">
       <a class="nav-link current text-on-surface-variant font-label-md text-label-md" href="index.html">Home</a>
@@ -93,7 +89,7 @@ tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-tertiary":"#ffffff"
       </div>
       <div class="flex items-center flex-wrap gap-6 border-t border-outline-variant/30 pt-8">
         <div><div class="flex items-center gap-1 text-primary font-bold text-headline-md font-headline-md">4.5&thinsp;<span class="material-symbols-outlined icon-filled text-yellow-500">star</span></div><span class="font-label-sm text-label-sm text-on-surface-variant">Patient Rating</span></div>
-        <div><div class="text-primary font-bold text-headline-md font-headline-md">15+</div><span class="font-label-sm text-label-sm text-on-surface-variant">Years of Service</span></div>
+        <div><div class="text-primary font-bold text-headline-md font-headline-md">32+</div><span class="font-label-sm text-label-sm text-on-surface-variant">Years of Service</span></div>
         <div><div class="text-primary font-bold text-headline-md font-headline-md">24/7</div><span class="font-label-sm text-label-sm text-on-surface-variant">Emergency Care</span></div>
         <div><div class="text-primary font-bold text-headline-md font-headline-md">1L+</div><span class="font-label-sm text-label-sm text-on-surface-variant">Patients Served</span></div>
       </div>
@@ -127,15 +123,16 @@ tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-tertiary":"#ffffff"
     </div>
     <div class="reveal order-1 lg:order-2">
       <span class="text-secondary font-bold tracking-widest uppercase text-label-sm mb-4 block">About Our Hospital</span>
-      <h2 class="font-headline-lg text-headline-lg text-primary mb-6">Integrating Modern Medicine with Nature's Healing Power</h2>
-      <p class="font-body-md text-body-md text-on-surface-variant mb-5 leading-relaxed">Gopal Hospital And Nature Care is a trusted healthcare centre in Naubatpur dedicated to providing quality medical services alongside time-tested natural therapies.</p>
+      <h2 class="font-headline-lg text-headline-lg text-primary mb-6">Patient-Centered Healthcare in the Heart of Naubatpur</h2>
+      <p class="font-body-md text-body-md text-on-surface-variant mb-5 leading-relaxed">Founded with a mission to bring advanced healthcare to Bihar, Gopal Hospital stands as a beacon of medical excellence in Naubatpur. We prioritize patient comfort and clinical outcomes above all else, combining modern technology with a deep sense of community service.</p>
+      <p class="font-body-md text-body-md text-on-surface-variant mb-8 leading-relaxed">Our facility is designed to reduce the stress of medical visits, offering a sterile yet warm environment where every patient is treated with dignity and personalized care.</p>
       <ul class="space-y-3.5 mb-8">
-        <li class="flex items-center gap-3 text-on-surface font-label-md"><span class="material-symbols-outlined icon-filled text-secondary">check_circle</span>Advanced 24/7 Diagnostic & Emergency Services</li>
-        <li class="flex items-center gap-3 text-on-surface font-label-md"><span class="material-symbols-outlined icon-filled text-secondary">check_circle</span>Yoga, Panch Karma & Holistic Wellness Programs</li>
-        <li class="flex items-center gap-3 text-on-surface font-label-md"><span class="material-symbols-outlined icon-filled text-secondary">check_circle</span>Affordable Healthcare for Every Family</li>
+        <li class="flex items-center gap-3 text-on-surface font-label-md"><span class="material-symbols-outlined icon-filled text-secondary">check_circle</span>Advanced 24/7 Diagnostic Services</li>
+        <li class="flex items-center gap-3 text-on-surface font-label-md"><span class="material-symbols-outlined icon-filled text-secondary">check_circle</span>Experienced Specialist Doctors</li>
+        <li class="flex items-center gap-3 text-on-surface font-label-md"><span class="material-symbols-outlined icon-filled text-secondary">check_circle</span>Modern Patient Care Facilities</li>
       </ul>
-      <a class="inline-flex items-center gap-2 font-bold text-primary hover:underline group" href="about.html">
-        Read More About Us <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+      <a class="inline-flex items-center gap-2 font-bold text-primary hover:underline group" href="#appointment">
+        Learn More About Our Journey <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
       </a>
     </div>
   </div>
@@ -177,6 +174,172 @@ tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-tertiary":"#ffffff"
   </div>
 </section>
 
+<!-- ════ MEDICAL TEAM PREVIEW ════ -->
+<section class="py-xl bg-surface-container-low" id="doctors">
+  <div class="px-gutter max-w-container-max mx-auto">
+    <div class="text-center max-w-2xl mx-auto mb-xl reveal">
+      <span class="text-secondary font-bold tracking-widest uppercase text-label-sm mb-4 block">Medical Team</span>
+      <h2 class="font-headline-lg text-headline-lg text-primary mb-4">Meet Our Specialist Doctors</h2>
+      <p class="font-body-md text-body-md text-on-surface-variant">Experienced, caring specialists dedicated to your family's health.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 reveal-group">
+      <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all group border border-outline-variant/10">
+        <div class="h-72 overflow-hidden relative img-wrap">
+          <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Dr. Amit Kumar - Senior Cardiologist" src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=500&q=80" onerror="this.style.display='none'">
+          <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-label-sm text-primary font-bold">32+ Yrs Exp</div>
+        </div>
+        <div class="p-6">
+          <h4 class="font-headline-md text-headline-md text-on-surface mb-1">Dr. Amit Kumar</h4>
+          <p class="text-secondary font-bold text-label-sm mb-4">Senior Cardiologist</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all group border border-outline-variant/10">
+        <div class="h-72 overflow-hidden relative img-wrap">
+          <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Dr. Priya Singh - Pediatrician" src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=500&q=80" onerror="this.style.display='none'">
+          <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-label-sm text-primary font-bold">10+ Yrs Exp</div>
+        </div>
+        <div class="p-6">
+          <h4 class="font-headline-md text-headline-md text-on-surface mb-1">Dr. Priya Singh</h4>
+          <p class="text-secondary font-bold text-label-sm mb-4">Pediatrician</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all group border border-outline-variant/10">
+        <div class="h-72 overflow-hidden relative img-wrap">
+          <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Dr. Ravi Sharma - Orthopedic Surgeon" src="https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=500&q=80" onerror="this.style.display='none'">
+          <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-label-sm text-primary font-bold">12+ Yrs Exp</div>
+        </div>
+        <div class="p-6">
+          <h4 class="font-headline-md text-headline-md text-on-surface mb-1">Dr. Ravi Sharma</h4>
+          <p class="text-secondary font-bold text-label-sm mb-4">Orthopedic Surgeon</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all group border border-outline-variant/10">
+        <div class="h-72 overflow-hidden relative img-wrap">
+          <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Dr. Anjali Verma - Gynecologist" src="https://images.unsplash.com/photo-1651008376811-b90baee60c1f?w=500&q=80" onerror="this.style.display='none'">
+          <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-label-sm text-primary font-bold">8+ Yrs Exp</div>
+        </div>
+        <div class="p-6">
+          <h4 class="font-headline-md text-headline-md text-on-surface mb-1">Dr. Anjali Verma</h4>
+          <p class="text-secondary font-bold text-label-sm mb-4">Gynecologist</p>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-8 reveal">
+      <a class="inline-flex items-center gap-2 bg-primary text-white px-7 py-3 rounded-xl font-bold text-label-md hover:bg-primary-container transition-all" href="doctors.html">
+        View All Doctors <span class="material-symbols-outlined">arrow_forward</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ════ INFRASTRUCTURE PREVIEW ════ -->
+<section class="py-xl px-gutter max-w-container-max mx-auto" id="facilities">
+  <div class="text-center max-w-2xl mx-auto mb-xl reveal">
+    <span class="text-secondary font-bold tracking-widest uppercase text-label-sm mb-4 block">World Class Infrastructure</span>
+    <h2 class="font-headline-lg text-headline-lg text-primary mb-4">Advanced Medical Facilities</h2>
+    <p class="font-body-md text-body-md text-on-surface-variant">Modern equipment and comfortable spaces built around patient wellbeing.</p>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-6 h-[800px] md:h-[600px] reveal">
+    <div class="md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-3xl img-wrap">
+      <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Premium patient rooms" src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?w=900&q=80" onerror="this.style.display='none'">
+      <div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex flex-col justify-end p-8">
+        <h4 class="text-white font-headline-md text-headline-md mb-2">Premium Patient Rooms</h4>
+        <p class="text-white/80 font-body-md">Comfortable, private recovery suites designed for tranquility and healing.</p>
+      </div>
+    </div>
+    <div class="relative group overflow-hidden rounded-3xl img-wrap">
+      <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Diagnostic center" src="https://images.unsplash.com/photo-1583912267550-d6c2ac3196c0?w=600&q=80" onerror="this.style.display='none'">
+      <div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex flex-col justify-end p-6">
+        <h4 class="text-white font-headline-md text-headline-md mb-1">Diagnostic Center</h4>
+        <p class="text-white/80 text-label-md">Latest imaging and laboratory technology.</p>
+      </div>
+    </div>
+    <div class="relative group overflow-hidden rounded-3xl img-wrap">
+      <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Emergency services" src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=600&q=80" onerror="this.style.display='none'">
+      <div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex flex-col justify-end p-6">
+        <h4 class="text-white font-headline-md text-headline-md mb-1">Emergency Services</h4>
+        <p class="text-white/80 text-label-md">24/7 trauma care and ICU support.</p>
+      </div>
+    </div>
+  </div>
+  <div class="text-center mt-8 reveal">
+    <a class="inline-flex items-center gap-2 bg-primary text-white px-7 py-3 rounded-xl font-bold text-label-md hover:bg-primary-container transition-all" href="facilities.html">
+      View All Facilities <span class="material-symbols-outlined">arrow_forward</span>
+    </a>
+  </div>
+</section>
+
+<!-- ════ PROGRAMS PREVIEW ════ -->
+<section class="py-xl bg-surface-container-low" id="programs">
+  <div class="px-gutter max-w-container-max mx-auto">
+    <div class="text-center max-w-2xl mx-auto mb-xl reveal">
+      <span class="text-secondary font-bold tracking-widest uppercase text-label-sm mb-4 block">Community Wellness</span>
+      <h2 class="font-headline-lg text-headline-lg text-primary mb-4">Our Programs</h2>
+      <p class="font-body-md text-body-md text-on-surface-variant">Health camps, awareness drives, and wellness programs run by Gopal Hospital And Nature Care.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal-group">
+      <div class="bg-white rounded-2xl overflow-hidden border border-outline-variant/30 hover:shadow-lg transition-all group">
+        <div class="h-48 overflow-hidden img-wrap"><img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Free Yoga Camp" src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=500&q=80" onerror="this.style.display='none'"></div>
+        <div class="p-6">
+          <span class="inline-block bg-secondary-container text-on-secondary-container text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3">Ongoing</span>
+          <h4 class="font-headline-md text-headline-md text-on-surface mb-2">Free Yoga & Wellness Camp</h4>
+          <p class="text-on-surface-variant font-body-md text-sm">Daily morning yoga sessions for the local community to promote fitness and stress relief.</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl overflow-hidden border border-outline-variant/30 hover:shadow-lg transition-all group">
+        <div class="h-48 overflow-hidden img-wrap"><img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Niramay Health Checkup Drive" src="https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?w=500&q=80" onerror="this.style.display='none'"></div>
+        <div class="p-6">
+          <span class="inline-block bg-secondary-container text-on-secondary-container text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3">Ongoing</span>
+          <h4 class="font-headline-md text-headline-md text-on-surface mb-2">Niramay Free Checkup Drive</h4>
+          <p class="text-on-surface-variant font-body-md text-sm">Free monthly health screening camps for blood pressure, sugar, and general checkups.</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl overflow-hidden border border-outline-variant/30 hover:shadow-lg transition-all group">
+        <div class="h-48 overflow-hidden img-wrap"><img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Mother and Child Wellness" src="https://images.unsplash.com/photo-1519494080410-f9aa76cb4283?w=500&q=80" onerror="this.style.display='none'"></div>
+        <div class="p-6">
+          <span class="inline-block bg-secondary-container text-on-secondary-container text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3">Ongoing</span>
+          <h4 class="font-headline-md text-headline-md text-on-surface mb-2">Mother & Child Wellness Drive</h4>
+          <p class="text-on-surface-variant font-body-md text-sm">Awareness sessions and free consultations for expecting mothers and newborns.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="font-headline-md text-headline-md text-on-surface mb-6 reveal">Previous Programs</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal-group">
+      <div class="bg-white rounded-2xl overflow-hidden border border-outline-variant/30 hover:shadow-lg transition-all group">
+        <div class="h-40 overflow-hidden img-wrap"><img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Blood Donation Camp" src="https://images.unsplash.com/photo-1615461066841-6116e61058f4?w=500&q=80" onerror="this.style.display='none'"></div>
+        <div class="p-6">
+          <p class="text-label-sm text-on-surface-variant mb-2">12 Jan 2026</p>
+          <h4 class="font-headline-md text-headline-md text-on-surface mb-2">Annual Blood Donation Camp</h4>
+          <p class="text-on-surface-variant font-body-md text-sm">Over 300 units of blood collected with support from local volunteers.</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl overflow-hidden border border-outline-variant/30 hover:shadow-lg transition-all group">
+        <div class="h-40 overflow-hidden img-wrap"><img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Panchkarma Awareness Camp" src="https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?w=500&q=80" onerror="this.style.display='none'"></div>
+        <div class="p-6">
+          <p class="text-label-sm text-on-surface-variant mb-2">05 Nov 2025</p>
+          <h4 class="font-headline-md text-headline-md text-on-surface mb-2">Panchkarma Awareness Camp</h4>
+          <p class="text-on-surface-variant font-body-md text-sm">Free demonstration and consultation for traditional Panchkarma therapy.</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl overflow-hidden border border-outline-variant/30 hover:shadow-lg transition-all group">
+        <div class="h-40 overflow-hidden img-wrap"><img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Diabetes Screening Camp" src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=500&q=80" onerror="this.style.display='none'"></div>
+        <div class="p-6">
+          <p class="text-label-sm text-on-surface-variant mb-2">18 Sep 2025</p>
+          <h4 class="font-headline-md text-headline-md text-on-surface mb-2">Diabetes & BP Screening Camp</h4>
+          <p class="text-on-surface-variant font-body-md text-sm">Free screening for over 500 residents of Naubatpur and nearby villages.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-8 reveal">
+      <a class="inline-flex items-center gap-2 bg-primary text-white px-7 py-3 rounded-xl font-bold text-label-md hover:bg-primary-container transition-all" href="programs.html">
+        View All Programs <span class="material-symbols-outlined">arrow_forward</span>
+      </a>
+    </div>
+  </div>
+</section>
+
 <!-- ════ TESTIMONIALS ════ -->
 <section class="py-xl bg-primary text-on-primary">
   <div class="px-gutter max-w-container-max mx-auto text-center reveal">
@@ -197,6 +360,149 @@ tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-tertiary":"#ffffff"
         <div class="flex gap-1 text-yellow-400 mb-4"><span class="material-symbols-outlined icon-filled">star</span><span class="material-symbols-outlined icon-filled">star</span><span class="material-symbols-outlined icon-filled">star</span><span class="material-symbols-outlined icon-filled">star</span><span class="material-symbols-outlined icon-filled">star</span></div>
         <p class="font-body-md text-on-primary-container mb-6 italic">"The Niramay 21-day program changed my life. I will always come here."</p>
         <div class="flex items-center gap-4"><div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center font-bold text-lg">M</div><div><p class="font-bold font-label-md">Manish Singh</p><p class="text-label-sm opacity-70">Patient, Naubatpur</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ APPOINTMENT / LOCATION ════ -->
+<section class="py-xl px-gutter max-w-container-max mx-auto" id="appointment">
+  <div class="grid lg:grid-cols-2 gap-xl">
+    <div class="reveal" id="mobile-step">
+      <h2 class="font-headline-lg text-headline-lg text-primary mb-6">Book an Appointment</h2>
+      <p class="font-body-md text-body-md text-on-surface-variant mb-8">Verify your mobile number to start booking your appointment with Gopal Hospital And Nature Care.</p>
+
+      <!-- Step indicator -->
+      <div class="flex items-center gap-3 mb-8">
+        <div class="flex items-center gap-2">
+          <div id="step-dot-1" class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-label-sm">1</div>
+          <span class="font-label-md text-label-md text-on-surface">Verify Mobile</span>
+        </div>
+        <div class="flex-1 h-0.5 bg-outline-variant/40"></div>
+        <div class="flex items-center gap-2">
+          <div id="step-dot-2" class="w-8 h-8 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center font-bold text-label-sm">2</div>
+          <span class="font-label-md text-label-md text-on-surface-variant">Appointment Details</span>
+        </div>
+      </div>
+
+      <!-- STEP 1: OTP Verification -->
+      <div id="otp-step" class="bg-white p-6 rounded-2xl border border-outline-variant/30 space-y-5">
+        <div class="space-y-2">
+          <label class="font-label-md text-label-md text-on-surface">Mobile Number</label>
+          <div class="flex gap-3">
+            <input id="otp-phone" class="flex-1 h-12 px-4 rounded-xl border border-outline-variant bg-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Enter 10-digit mobile number" type="tel" maxlength="10" inputmode="numeric">
+            <button id="send-otp-btn" onclick="sendOtp()" class="bg-primary text-on-primary px-6 rounded-xl font-bold font-label-md hover:shadow-lg transition-all whitespace-nowrap">Send OTP</button>
+          </div>
+          <p id="otp-msg" class="text-label-sm hidden"></p>
+        </div>
+        <div id="otp-input-row" class="space-y-2 hidden">
+          <label class="font-label-md text-label-md text-on-surface">Enter OTP</label>
+          <div class="flex gap-3">
+            <input id="otp-code" class="flex-1 h-12 px-4 rounded-xl border border-outline-variant bg-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="6-digit OTP" type="tel" maxlength="6" inputmode="numeric">
+            <button onclick="verifyOtp()" class="bg-secondary text-on-secondary px-6 rounded-xl font-bold font-label-md hover:shadow-lg transition-all whitespace-nowrap">Verify OTP</button>
+          </div>
+          <p id="verify-msg" class="text-label-sm hidden"></p>
+        </div>
+      </div>
+
+      <!-- STEP 2: Appointment Form (hidden until OTP verified) -->
+      <form id="appointment-form" class="space-y-6 hidden mt-6" onsubmit="return submitAppointment(event)">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-2">
+            <label class="font-label-md text-label-md text-on-surface">Full Name</label>
+            <input required class="w-full h-12 px-4 rounded-xl border border-outline-variant bg-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Enter your name" type="text">
+          </div>
+          <div class="space-y-2">
+            <label class="font-label-md text-label-md text-on-surface">Mobile Number</label>
+            <input id="form-phone" required readonly class="w-full h-12 px-4 rounded-xl border border-outline-variant bg-surface-container text-on-surface-variant outline-none" type="tel">
+          </div>
+        </div>
+        <div class="space-y-2">
+          <label class="font-label-md text-label-md text-on-surface">Address</label>
+          <input required class="w-full h-12 px-4 rounded-xl border border-outline-variant bg-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="House no, Village/Town, District" type="text">
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-2">
+            <label class="font-label-md text-label-md text-on-surface">Aadhaar Number</label>
+            <input class="w-full h-12 px-4 rounded-xl border border-outline-variant bg-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="XXXX XXXX XXXX" type="text" maxlength="12" inputmode="numeric">
+          </div>
+          <div class="space-y-2">
+            <label class="font-label-md text-label-md text-on-surface">Date of Birth</label>
+            <input required class="w-full h-12 px-4 rounded-xl border border-outline-variant bg-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" type="date">
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-2">
+            <label class="font-label-md text-label-md text-on-surface">Gender / Sex</label>
+            <select required class="w-full h-12 px-4 rounded-xl border border-outline-variant bg-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all">
+              <option value="">Select</option>
+              <option>Male</option>
+              <option>Female</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="space-y-2">
+            <label class="font-label-md text-label-md text-on-surface">Preferred Appointment Date</label>
+            <input required class="w-full h-12 px-4 rounded-xl border border-outline-variant bg-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" type="date">
+          </div>
+        </div>
+        <div class="space-y-2">
+          <label class="font-label-md text-label-md text-on-surface">Preferred Time</label>
+          <input required class="w-full h-12 px-4 rounded-xl border border-outline-variant bg-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" type="time">
+        </div>
+        <div class="space-y-2">
+          <label class="font-label-md text-label-md text-on-surface">Health Problem / Remark</label>
+          <textarea class="w-full p-4 rounded-xl border border-outline-variant bg-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all resize-none" placeholder="Briefly describe your medical concern" rows="4"></textarea>
+        </div>
+        <div class="bg-secondary-container/40 border border-secondary/30 text-on-secondary-container rounded-xl p-4 flex gap-3 items-start">
+          <span class="material-symbols-outlined text-secondary">info</span>
+          <p class="text-label-md">Note: Please arrive 20 minutes before your appointment time.</p>
+        </div>
+        <button class="bg-primary text-on-primary w-full py-4 rounded-xl font-bold font-label-md hover:shadow-xl transition-all active:scale-95" type="submit">Submit Appointment Request</button>
+      </form>
+
+      <!-- Success Message -->
+      <div id="appointment-success" class="hidden bg-secondary-container/40 border border-secondary/40 rounded-2xl p-8 text-center mt-6">
+        <span class="material-symbols-outlined icon-filled text-secondary text-[48px]">check_circle</span>
+        <h3 class="font-headline-md text-headline-md text-on-surface mt-4 mb-2">Appointment Request Received!</h3>
+        <p class="text-on-surface-variant font-body-md">Our medical coordinator will call you shortly to confirm your slot. Please arrive 20 minutes before your appointment time.</p>
+      </div>
+    </div>
+
+    <div class="reveal space-y-8">
+      <h3 class="font-headline-md text-headline-md text-on-surface mb-6">Our Location</h3>
+      <div class="rounded-3xl overflow-hidden shadow-inner bg-surface-container h-72 border border-outline-variant/30 img-wrap">
+        <img class="w-full h-full object-cover" alt="Map showing Gopal Hospital location in Naubatpur" src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=900&q=80" onerror="this.style.display='none'">
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="flex gap-4">
+          <div class="text-primary"><span class="material-symbols-outlined">location_on</span></div>
+          <div>
+            <h4 class="font-bold text-on-surface mb-1">Address</h4>
+            <p class="text-on-surface-variant text-label-md">Bikram More, Niramaynagar, selhauri, Naubatpur, Patna Bihar - 801109</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <div class="text-primary"><span class="material-symbols-outlined">call</span></div>
+          <div>
+            <h4 class="font-bold text-on-surface mb-1">Call Us</h4>
+            <p class="text-on-surface-variant text-label-md">+91 93343 44821</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <div class="text-primary"><span class="material-symbols-outlined">schedule</span></div>
+          <div>
+            <h4 class="font-bold text-on-surface mb-1">Timing</h4>
+            <p class="text-on-surface-variant text-label-md">Open 24/7 for Emergency<br>OPD: 9 AM - 8 PM</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <div class="text-primary"><span class="material-symbols-outlined">mail</span></div>
+          <div>
+            <h4 class="font-bold text-on-surface mb-1">Email</h4>
+            <p class="text-on-surface-variant text-label-md">info@gopalhospital.in</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -252,5 +558,61 @@ tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-tertiary":"#ffffff"
 
 <div class="toast" id="toast"><span class="material-symbols-outlined icon-filled text-green-400">check_circle</span><span id="toastMsg">Done!</span></div>
 <script src="app.js"></script>
+<script>
+  // ---- Two-step appointment booking (OTP demo) ----
+  // NOTE: Front-end simulation only. Real OTP delivery needs a backend SMS gateway (MSG91/Twilio).
+  let generatedOtp = null;
+  let otpVerified = false;
+
+  function sendOtp() {
+    const phone = document.getElementById('otp-phone').value.trim();
+    const msg = document.getElementById('otp-msg');
+    if (!/^[6-9]\d{9}$/.test(phone)) {
+      msg.textContent = 'Please enter a valid 10-digit mobile number.';
+      msg.className = 'text-label-sm text-error';
+      msg.classList.remove('hidden');
+      return;
+    }
+    generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
+    console.log('Demo OTP (would be sent via SMS):', generatedOtp);
+    document.getElementById('otp-input-row').classList.remove('hidden');
+    msg.textContent = 'OTP sent to +91 ' + phone + ' (demo mode — check console).';
+    msg.className = 'text-label-sm text-secondary';
+    msg.classList.remove('hidden');
+    document.getElementById('send-otp-btn').textContent = 'Resend OTP';
+  }
+
+  function verifyOtp() {
+    const entered = document.getElementById('otp-code').value.trim();
+    const vmsg = document.getElementById('verify-msg');
+    if (entered === generatedOtp && generatedOtp !== null) {
+      otpVerified = true;
+      vmsg.textContent = 'Mobile number verified successfully!';
+      vmsg.className = 'text-label-sm text-secondary';
+      vmsg.classList.remove('hidden');
+      document.getElementById('otp-step').classList.add('opacity-60', 'pointer-events-none');
+      document.getElementById('appointment-form').classList.remove('hidden');
+      document.getElementById('form-phone').value = '+91 ' + document.getElementById('otp-phone').value.trim();
+      document.getElementById('step-dot-1').classList.remove('bg-primary', 'text-on-primary');
+      document.getElementById('step-dot-1').classList.add('bg-secondary', 'text-on-secondary');
+      document.getElementById('step-dot-2').classList.remove('bg-surface-container', 'text-on-surface-variant');
+      document.getElementById('step-dot-2').classList.add('bg-primary', 'text-on-primary');
+      document.getElementById('appointment-form').scrollIntoView({behavior: 'smooth', block: 'center'});
+    } else {
+      vmsg.textContent = 'Incorrect OTP. Please try again.';
+      vmsg.className = 'text-label-sm text-error';
+      vmsg.classList.remove('hidden');
+    }
+  }
+
+  function submitAppointment(e) {
+    e.preventDefault();
+    if (!otpVerified) return false;
+    document.getElementById('appointment-form').classList.add('hidden');
+    document.getElementById('appointment-success').classList.remove('hidden');
+    document.getElementById('appointment-success').scrollIntoView({behavior: 'smooth', block: 'center'});
+    return false;
+  }
+</script>
 </body>
 </html>
