@@ -1,5 +1,6 @@
 import express from "express";
 import upload from "../middleware/upload.js";
+import { verifyToken } from "../middleware/verifyToken.js";
 import {
   getPrograms,
   getProgram,
@@ -10,10 +11,10 @@ import {
 
 const router = express.Router();
 
-router.get("/", getPrograms);              // GET    /api/programs
-router.get("/:id", getProgram);            // GET    /api/programs/:id
-router.post("/", upload.single("image"), addProgram);       // POST   /api/programs
-router.put("/:id", upload.single("image"), editProgram);    // PUT    /api/programs/:id
-router.delete("/:id", removeProgram);      // DELETE /api/programs/:id
+router.get("/", getPrograms);              // GET    /api/programs (public)
+router.get("/:id", getProgram);            // GET    /api/programs/:id (public)
+router.post("/", verifyToken, upload.single("image"), addProgram);       // Admin only
+router.put("/:id", verifyToken, upload.single("image"), editProgram);    // Admin only
+router.delete("/:id", verifyToken, removeProgram);      // Admin only
 
 export default router;

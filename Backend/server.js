@@ -15,8 +15,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// connectDB();
-
 app.use(express.urlencoded({ extended: true }));
 
 // Uploaded images ko publicly serve karo -> http://localhost:5000/uploads/filename.jpg

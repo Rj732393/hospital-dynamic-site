@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "../styles/AdminProgram.css";
 import AdminLayout from "../components/layout/AdminLayout";
+import axiosClient from "../api/axiosClient";
 
-// Apna backend URL yahan set karein
+// Apna backend URL yahan set karein (sirf images resolve karne ke liye chahiye)
 const BASE_URL = "http://localhost:5000";
-const API_URL = `${BASE_URL}/api/programs`;
 
 const initialForm = { title: "", shortDescription: "", description: "", image: null };
 
@@ -35,25 +35,24 @@ export default function AdminProgram() {
     fetchPrograms();
   }, []);
 
+  const showMessage = (msg, isError = false) => {
+    if (isError) {
+      setError(msg);
+      setTimeout(() => setError(""), 4000);
+    } else {
+      setSuccess(msg);
+      setTimeout(() => setSuccess(""), 3000);
+    }
+  };
+
   const fetchPrograms = async () => {
     setLoading(true);
     try {
-      const res = await fetch(encodeURI(API_URL));
-      const rawText = await res.text();
-      let data;
-      try {
-        data = JSON.parse(rawText);
-      } catch {
-        throw new Error(`Server ne JSON nahi bheja (status ${res.status}). Raw response: ${rawText.slice(0, 300)}`);
-      }
-      if (!res.ok || !data.success) {
-        throw new Error(`(${res.status}) ${data.message || "Programs fetch nahi ho paye"}`);
-      }
-      setPrograms(data.data);
-      console.log("Fetched programs:", data.data);
+      const res = await axiosClient.get("/programs");
+      setPrograms(res.data.data);
     } catch (err) {
       console.error("fetchPrograms error:", err);
-      showMessage("FETCH ERROR: " + err.message, true);
+      showMessage("FETCH ERROR: " + (err.response?.data?.message || err.message), true);
     } finally {
       setLoading(false);
     }
@@ -77,16 +76,6 @@ export default function AdminProgram() {
     setShowForm(false);
   };
 
-  const showMessage = (msg, isError = false) => {
-    if (isError) {
-      setError(msg);
-      setTimeout(() => setError(""), 4000);
-    } else {
-      setSuccess(msg);
-      setTimeout(() => setSuccess(""), 3000);
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -104,26 +93,22 @@ export default function AdminProgram() {
 
     setLoading(true);
     try {
-      const url = editId ? `${API_URL}/${editId}` : API_URL;
-      const method = editId ? "PUT" : "POST";
-      const res = await fetch(encodeURI(url), { method, body: fd });
-      const rawText = await res.text();
-      let data;
-      try {
-        data = JSON.parse(rawText);
-      } catch {
-        throw new Error(`Server ne JSON nahi bheja (status ${res.status}). Raw response: ${rawText.slice(0, 300)}`);
-      }
-      if (!res.ok || !data.success) {
-        throw new Error(`(${res.status}) ${data.message || "Save fail hua"}`);
+      if (editId) {
+        await axiosClient.put(`/programs/${editId}`, fd, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+      } else {
+        await axiosClient.post("/programs", fd, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
       }
 
-      showMessage(data.message || (editId ? "Program update ho gaya" : "Program add ho gaya"));
+      showMessage(editId ? "Program update ho gaya" : "Program add ho gaya");
       await fetchPrograms();
       resetForm();
     } catch (err) {
       console.error("handleSubmit error:", err);
-      showMessage("SAVE ERROR: " + err.message, true);
+      showMessage("SAVE ERROR: " + (err.response?.data?.message || err.message), true);
     } finally {
       setLoading(false);
     }
@@ -146,22 +131,12 @@ export default function AdminProgram() {
     if (!window.confirm("Kya aap sach me is program ko delete karna chahte hain?")) return;
     setLoading(true);
     try {
-      const res = await fetch(encodeURI(`${API_URL}/${id}`), { method: "DELETE" });
-      const rawText = await res.text();
-      let data;
-      try {
-        data = JSON.parse(rawText);
-      } catch {
-        throw new Error(`Server ne JSON nahi bheja (status ${res.status}). Raw response: ${rawText.slice(0, 300)}`);
-      }
-      if (!res.ok || !data.success) {
-        throw new Error(`(${res.status}) ${data.message || "Delete fail hua"}`);
-      }
-      showMessage(data.message || "Program delete ho gaya");
+      await axiosClient.delete(`/programs/${id}`);
+      showMessage("Program delete ho gaya");
       await fetchPrograms();
     } catch (err) {
       console.error("handleDelete error:", err);
-      showMessage("DELETE ERROR: " + err.message, true);
+      showMessage("DELETE ERROR: " + (err.response?.data?.message || err.message), true);
     } finally {
       setLoading(false);
     }
