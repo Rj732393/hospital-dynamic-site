@@ -8,6 +8,7 @@ import appointmentRoutes from "./routes/appointmentRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 import programRoutes from "./routes/programRoutes.js";
 import serviceRoutes from "./routes/serviceRoutes.js";
+import doctorRoutes from "./routes/doctorRoutes.js";
 
 dotenv.config();
 
@@ -31,6 +32,7 @@ app.use("/api/contacts", contactRoutes);
 // API routes
 app.use("/api/programs", programRoutes);
 app.use("/api/services", serviceRoutes);
+app.use("/api/doctors", doctorRoutes);
 
 app.get("/", (req, res) => {
   res.json({ message: "Hospital Backend Running Successfully 🚀" });

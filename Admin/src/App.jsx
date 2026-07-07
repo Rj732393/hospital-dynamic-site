@@ -8,6 +8,8 @@ import Program from "./pages/AdminProgram";
 import Service from "./pages/AdminService";
 import AdminContacts from "./pages/Admincontact";
 import AdminAppointments from "./pages/AdminAppointments";
+// import AdminDoctor from "./pages/AdminDoctors"; 
+import AdminDoctors from "./pages/AdminDoctors";
 
 export default function App() {
   return (
@@ -32,6 +34,11 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+
+          <Route path="/doctors" element={
+            <ProtectedRoute>
+              <AdminDoctors />
+              </ProtectedRoute>} />
           <Route
             path="/contacts"
             element={

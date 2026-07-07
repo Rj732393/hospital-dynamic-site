@@ -182,7 +182,7 @@ tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-tertiary":"#ffffff"
       <h2 class="font-headline-lg text-headline-lg text-primary mb-4">Meet Our Specialist Doctors</h2>
       <p class="font-body-md text-body-md text-on-surface-variant">Experienced, caring specialists dedicated to your family's health.</p>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 reveal-group">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 reveal-group" id="homeDoctorsGrid">
       <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all group border border-outline-variant/10">
         <div class="h-72 overflow-hidden relative img-wrap">
           <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Dr. Amit Kumar - Senior Cardiologist" src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=500&q=80" onerror="this.style.display='none'">
@@ -550,11 +550,25 @@ arrow_forward
 
 <div class="toast" id="toast"><span class="material-symbols-outlined icon-filled text-green-400">check_circle</span><span id="toastMsg">Done!</span></div>
 <script src="app.js"></script>
+<script src="home-preview.js"></script>  
 <script>
   // ---- Two-step appointment booking (OTP demo) ----
   // NOTE: Front-end simulation only. Real OTP delivery needs a backend SMS gateway (MSG91/Twilio).
   let generatedOtp = null;
   let otpVerified = false;
+
+  document.querySelectorAll('a[href="appointment.html"]').forEach(function (link) {
+  link.addEventListener("click", function (e) {
+    if (!otpVerified) {
+      e.preventDefault(); // naya page mat khulne do
+      const appointmentSection = document.getElementById("appointment");
+      if (appointmentSection) {
+        appointmentSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+    // agar otpVerified true hai, toh normal link kaam karega (appointment.html khulega)
+  });
+});
 
   function sendOtp() {
     const phone = document.getElementById('otp-phone').value.trim();
