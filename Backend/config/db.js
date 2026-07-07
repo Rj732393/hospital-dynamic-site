@@ -21,8 +21,9 @@ export async function connectDB() {
     pool = await sql.connect(dbConfig);
     console.log("✅ Connected to MS SQL Server");
   } catch (err) {
-    console.error("❌ Database Connection Failed:", err.message);
-  }
+  console.error("❌ Database Connection Failed:", err.message);
+  throw err;
+}
 }
 
 export function getPool() {
