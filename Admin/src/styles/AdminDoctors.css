@@ -1,0 +1,184 @@
+.admin-doctors {
+  padding: 24px;
+}
+
+.admin-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #003f87;
+  margin-bottom: 16px;
+}
+
+.admin-message {
+  background: #e6f4ec;
+  color: #2d7a4f;
+  padding: 10px 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.doctor-form {
+  background: #fff;
+  border: 1px solid #e4e2e1;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.form-group {
+  flex: 1;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  font-weight: 600;
+  font-size: 13px;
+  color: #1b1c1c;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"] {
+  height: 42px;
+  padding: 0 12px;
+  border: 1px solid #c2c6d4;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.form-group input[type="file"] {
+  height: auto;
+  padding: 8px 0;
+  border: none;
+}
+
+.photo-preview {
+  margin-top: 10px;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #e4e2e1;
+}
+
+.default-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #d7e2ff;
+  color: #003f87;
+  font-size: 40px;
+}
+
+.default-avatar.small {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  font-size: 22px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-primary {
+  background: #003f87;
+  color: #fff;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: #f0eded;
+  color: #1b1c1c;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.doctor-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.doctor-table th,
+.doctor-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #e4e2e1;
+  font-size: 14px;
+}
+
+.doctor-table th {
+  background: #f6f3f2;
+  font-weight: 700;
+  color: #424752;
+}
+
+.table-photo {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.actions-cell {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-edit,
+.btn-delete {
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-edit {
+  background: #d7e2ff;
+  color: #003f87;
+}
+
+.btn-delete {
+  background: #ffdad6;
+  color: #ba1a1a;
+}
+
+/* Number input ke up/down arrows hatane ke liye */
+.form-group input[type="number"]::-webkit-outer-spin-button,
+.form-group input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.form-group input[type="number"] {
+  -moz-appearance: textfield;
+}
