@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "../styles/AdminService.css";
 import AdminLayout from "../components/layout/AdminLayout";   // ✅ add karo
-import axiosClient from "../api/axiosClient";
 
 const BASE_URL = "http://localhost:5000";
+const API_URL = `${BASE_URL}/api/services`;
 
 const QUICK_ICONS = ["🌿", "🧘", "💆", "🏃", "👐", "🔬", "❤️", "🩺", "💊", "🏥", "🤰", "🌱"];
 
@@ -29,6 +29,20 @@ function resolveImage(imageUrl) {
   if (!imageUrl) return null;
   const fullUrl = /^https?:\/\//i.test(imageUrl) ? imageUrl : `${BASE_URL}${imageUrl}`;
   return encodeURI(fullUrl);
+}
+
+async function parseResponse(res) {
+  const rawText = await res.text();
+  let data;
+  try {
+    data = JSON.parse(rawText);
+  } catch {
+    throw new Error(`Server ne JSON nahi bheja (status ${res.status}). Raw response: ${rawText.slice(0, 300)}`);
+  }
+  if (!res.ok || !data.success) {
+    throw new Error(`(${res.status}) ${data.message || "Request fail hua"}`);
+  }
+  return data;
 }
 
 export default function AdminService() {
@@ -57,11 +71,12 @@ export default function AdminService() {
   const fetchServices = async () => {
     setLoading(true);
     try {
-      const res = await axiosClient.get("/services");
-      setServices(res.data.data);
+      const res = await fetch(encodeURI(API_URL));
+      const data = await parseResponse(res);
+      setServices(data.data);
     } catch (err) {
       console.error("fetchServices error:", err);
-      showMessage("FETCH ERROR: " + (err.response?.data?.message || err.message), true);
+      showMessage("FETCH ERROR: " + err.message, true);
     } finally {
       setLoading(false);
     }
@@ -96,22 +111,17 @@ export default function AdminService() {
 
     setLoading(true);
     try {
-      if (editId) {
-        await axiosClient.put(`/services/${editId}`, fd, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
-      } else {
-        await axiosClient.post("/services", fd, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
-      }
+      const url = editId ? `${API_URL}/${editId}` : API_URL;
+      const method = editId ? "PUT" : "POST";
+      const res = await fetch(encodeURI(url), { method, body: fd });
+      const data = await parseResponse(res);
 
-      showMessage(editId ? "Service update ho gaya" : "Service add ho gaya");
+      showMessage(data.message || (editId ? "Service update ho gaya" : "Service add ho gaya"));
       await fetchServices();
       resetForm();
     } catch (err) {
       console.error("handleSubmit error:", err);
-      showMessage("SAVE ERROR: " + (err.response?.data?.message || err.message), true);
+      showMessage("SAVE ERROR: " + err.message, true);
     } finally {
       setLoading(false);
     }
@@ -134,12 +144,13 @@ export default function AdminService() {
     if (!window.confirm("Kya aap sach me is service ko delete karna chahte hain?")) return;
     setLoading(true);
     try {
-      await axiosClient.delete(`/services/${id}`);
-      showMessage("Service delete ho gaya");
+      const res = await fetch(encodeURI(`${API_URL}/${id}`), { method: "DELETE" });
+      const data = await parseResponse(res);
+      showMessage(data.message || "Service delete ho gaya");
       await fetchServices();
     } catch (err) {
       console.error("handleDelete error:", err);
-      showMessage("DELETE ERROR: " + (err.response?.data?.message || err.message), true);
+      showMessage("DELETE ERROR: " + err.message, true);
     } finally {
       setLoading(false);
     }
